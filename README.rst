@@ -19,26 +19,48 @@ Installation
 Usage
 =====
 
+Basic Usage
+-----------
 Make a `new API token <https://circleci.com/account/api>`__ in the CircleCI application.
 
-Import the CircleCI API and start using methods
+Import the CircleCI API and start using methods:
 
 ::
 
     from circleci.api import Api
 
-    circleci = Api($YOUR_TOKEN)
+    circleci = Api("$YOUR_TOKEN")
 
     circleci.get_user_info()
 
+Usage with CircleCI server
+--------------------------
+Make a new API token at ``https://<$YOUR_CIRCLECI_DOMAIN>/account/api``.
+
+Import the CircleCI API and start using methods:
+
+::
+
+    from circleci.api import Api
+
+    circleci = Api("$YOUR_TOKEN", "$YOUR_CIRCLECI_DOMAIN/api/v1.1")
+
+    circleci.get_user_info()
 
 See `the tests <https://github.com/levlaz/circleci.py/blob/master/tests/circle/test_api.py>`__ for more examples.
+
+Features
+========
+
+1. Supports the `latest v1.1 of the CircleCI API <https://circleci.com/docs/api/v1-reference/>`__.
+2. Supports both circleci.com and `CircleCI server <https://circleci.com/enterprise/>`__ (aka "Enterprise").
 
 Limitations
 ===========
 
 1. Build paramaters not yet supported
 2. `These endpoints <https://github.com/levlaz/circleci.py/blob/master/circleci/api.py#L277>`__ are not yet supported.
+
 
 Development
 ===========
