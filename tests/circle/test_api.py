@@ -11,9 +11,7 @@ from circleci.error import BadHttpVerbError
 class TestCircleCIApi(unittest.TestCase):
 
     def setUp(self):
-        self.c = Api(
-            token = os.getenv('CIRCLE_CI_TOKEN'),
-            url='https://ccie-preview.sphereci.com/api/v1.1')
+        self.c = Api('fake-token')
 
     def loadMock(self, filename):
         """helper function to open mock responses"""
