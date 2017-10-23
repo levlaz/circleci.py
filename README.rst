@@ -15,7 +15,11 @@ Installation
 
 Development
 ===========
+Your life will be a lot better if you use a virtualenv when working with python.
 
 1. Fork and Clone this repo
-2. Run ``make dev``
-3. Hack away!
+2. Install `python-pip <https://pip.pypa.io/en/stable/installing/>`__ and `virtualenv <https://virtualenv.pypa.io/en/stable/>`__ if you do not already have it.
+3. Create a new virtualenv with ``virtualenv -p python3 env``.
+4. Actiavte the new virtualenv with ``source env/bin/activate``.
+5. Run ``make dev``
+6. Hack away!
