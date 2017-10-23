@@ -1,0 +1,64 @@
+Help on module api:
+
+NAME
+    api - CircleCI API Module
+
+DESCRIPTION
+    :copyright: (c) 2017 by Lev Lazinskiy
+    :license: MIT, see LICENSE for more details.
+
+CLASSES
+    builtins.object
+        Api
+    
+    class Api(builtins.object)
+     |  A python interface into the CircleCI API
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, token, url='https://circleci.com/api/v1.1')
+     |      Instantiate a new circleci.Api object.
+     |      
+     |      Args:
+     |          url (str):
+     |              The URL to the CircleCI instance
+     |              defaults to https://circleci.com/api/v1.1
+     |      
+     |              If you are running CircleCI server, the API
+     |              is available at the same endpoint of your own
+     |              installation url. i.e (https://circleci.yourcompany.com/api/v1.1)
+     |      
+     |          token (str):
+     |              Your CircleCI token.abs
+     |  
+     |  follow_project(self, username, project, vcs_type='github')
+     |      Follow a new project on CircleCI.
+     |      
+     |      Args:
+     |          vcs_type (str):
+     |              defaults to github
+     |              on circleci.com you can also pass in bitbucket
+     |          username (str):
+     |              github org or user name
+     |          project (str):
+     |              case sensitive repo name
+     |  
+     |  get_projects(self)
+     |      List of all the projects you're following on CircleCI.
+     |  
+     |  get_user_info(self)
+     |      Provides information about the signed in user.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+FILE
+    /Users/levlaz/git/circleci.py/circleci/api.py
+
+

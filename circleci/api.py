@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """
+CircleCI API Module
+
 :copyright: (c) 2017 by Lev Lazinskiy
 :license: MIT, see LICENSE for more details.
 """
