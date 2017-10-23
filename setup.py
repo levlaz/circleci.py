@@ -12,8 +12,8 @@ def readme():
         return f.read()
 
 setup(
-    name="circleci.py",
-    version="1.1.0",
+    name="circleci",
+    version="1.1.0.dev1",
     description="Python wrapper for the CircleCI API",
     long_description=readme(),
     url="https://github.com/levlaz/circleci.py",
@@ -23,17 +23,20 @@ setup(
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
+        "Intended Audience :: System Administrators",
         "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independentn",
+        "Operating System :: OS Independent",
+        "Topic :: Software Development :: Build Tools",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Internet",
-        "Programming Language :: Python",
-        "Programming Langauge :: Python :: 3",
+        "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3 :: Only",
     ],
     keywords='circleci ci cd api sdk',
     packages=['circleci'],
     install_requires=[
         'requests==2.18.4',
     ],
+    python_requires='>=3'
 )
