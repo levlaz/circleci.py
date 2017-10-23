@@ -31,23 +31,158 @@ CLASSES
      |          token (str):
      |              Your CircleCI token.abs
      |  
+     |  add_ssh_user(self, username, project, build_num, vcs_type='github')
+     |      Adds a user to the build's SSH permissions.
+     |      
+     |      Args:
+     |          username (str):
+     |              org or user name
+     |          project (str):
+     |              case sensitive repo name
+     |          build_num (str):
+     |              build number
+     |          vcs_type (str):
+     |              defaults to github
+     |              on circleci.com you can also pass in bitbucket
+     |      
+     |      Endpoint:
+     |          POST: /project/:vcs-type/:username/:project/:build_num/ssh-users
+     |  
+     |  cancel_build(self, username, project, build_num, vcs_type='github')
+     |      Cancels the build.
+     |      
+     |      Args:
+     |          username (str):
+     |              org or user name
+     |          project (str):
+     |              case sensitive repo name
+     |          build_num (str):
+     |              build number
+     |          vcs_type (str):
+     |              defaults to github
+     |              on circleci.com you can also pass in bitbucket
+     |      
+     |      Endpoint:
+     |          POST: /project/:vcs-type/:username/:project/:build_num/cancel
+     |  
      |  follow_project(self, username, project, vcs_type='github')
      |      Follow a new project on CircleCI.
      |      
      |      Args:
+     |          username (str):
+     |              org or user name
+     |          project (str):
+     |              case sensitive repo name
      |          vcs_type (str):
      |              defaults to github
      |              on circleci.com you can also pass in bitbucket
+     |      
+     |      Endpoint:
+     |          POST: /project/:vcs-type/:username/:project/follow
+     |  
+     |  get_artifacts(self, username, project, build_num, vcs_type='github')
+     |      List the artifacts produced by a given build.
+     |      
+     |      Args:
      |          username (str):
-     |              github org or user name
+     |              org or user name
      |          project (str):
      |              case sensitive repo name
+     |          build_num (str):
+     |              build number
+     |          vcs_type (str):
+     |              defaults to github
+     |              on circleci.com you can also pass in bitbucket
+     |      
+     |      Endpoint:
+     |          GET: /project/:vcs-type/:username/:project/:build_num/artifacts
+     |  
+     |  get_build_info(self, username, project, build_num, vcs_type='github')
+     |      Full details for a single build.
+     |      
+     |      Args:
+     |          username (str):
+     |              org or user name
+     |          project (str):
+     |              case sensitive repo name
+     |          build_num (str):
+     |              build number
+     |          vcs_type (str):
+     |              defaults to github
+     |              on circleci.com you can also pass in bitbucket
+     |      
+     |      Endpoint:
+     |          GET: /project/:vcs-type/:username/:project/:build_num
+     |  
+     |  get_project_build_summary(self, username, project, vcs_type='github')
+     |      Build summary for each of the last 30 builds for a single git repo.
+     |      
+     |      Args:
+     |          username (str):
+     |              org or user name
+     |          project (str):
+     |              case sensitive repo name
+     |          vcs_type (str):
+     |              defaults to github
+     |              on circleci.com you can also pass in bitbucket
+     |      
+     |      Endpoint:
+     |          GET: /project/:vcs-type/:username/:project
      |  
      |  get_projects(self)
      |      List of all the projects you're following on CircleCI.
+     |      
+     |      Endpoint:
+     |          GET: /projects
+     |  
+     |  get_recent_builds(self)
+     |      Build summary for each of the last 30 recent builds, ordered by build_num.
+     |      
+     |      Endpoint:
+     |          GET: /recent-builds
      |  
      |  get_user_info(self)
      |      Provides information about the signed in user.
+     |      
+     |      Endpoint:
+     |          GET: /me
+     |  
+     |  retry_build(self, username, project, build_num, vcs_type='github')
+     |      Retries the build.
+     |      
+     |      Args:
+     |          username (str):
+     |              org or user name
+     |          project (str):
+     |              case sensitive repo name
+     |          build_num (str):
+     |              build number
+     |          vcs_type (str):
+     |              defaults to github
+     |              on circleci.com you can also pass in bitbucket
+     |      
+     |      Endpoint:
+     |          POST: /project/:vcs-type/:username/:project/:build_num/retry
+     |  
+     |  trigger_build(self, username, project, branch='master', vcs_type='github')
+     |      Triggers a new build.
+     |      
+     |      # TODO support build params
+     |      # https://circleci.com/docs/1.0/parameterized-builds/
+     |      
+     |      Args:
+     |          username (str):
+     |              org or user name
+     |          project (str):
+     |              case sensitive repo name
+     |          branch (str):
+     |              defaults to master
+     |          vcs_type (str):
+     |              defaults to github
+     |              on circleci.com you can also pass in bitbucket
+     |      
+     |      Endpoint:
+     |          POST: /project/:vcs-type/:username/:project/tree/:branch
      |  
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
