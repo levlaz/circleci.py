@@ -16,6 +16,30 @@ Installation
 
     pip install circleci
 
+Usage
+=====
+
+Make a `new API token <https://circleci.com/account/api>`__ in the CircleCI application.
+
+Import the CircleCI API and start using methods
+
+::
+
+    from circleci.api import Api
+
+    circleci = Api($YOUR_TOKEN)
+
+    circleci.get_user_info()
+
+
+See `the tests <https://github.com/levlaz/circleci.py/blob/master/tests/circle/test_api.py>`__ for more examples.
+
+Limitations
+===========
+
+1. Build paramaters not yet supported
+2. `These endpoints <https://github.com/levlaz/circleci.py/blob/master/circleci/api.py#L277>`__ are not yet supported.
+
 Development
 ===========
 Your life will be a lot better if you use a virtualenv when working with python.
