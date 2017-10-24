@@ -15,8 +15,6 @@ class TestCircleCIApi(unittest.TestCase):
 
     def test_trigger_with_build_params(self):
         params = {
-            "param1": "value1",
-            "param2": "value2",
             "build_parameters[CIRCLE_JOB]": "test"
         }
 
