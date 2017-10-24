@@ -58,8 +58,7 @@ Features
 Limitations
 ===========
 
-1. Build paramaters not yet supported
-2. `These endpoints <https://github.com/levlaz/circleci.py/blob/master/circleci/api.py#L277>`__ are not yet supported.
+1. `These endpoints <https://github.com/levlaz/circleci.py/blob/master/circleci/api.py#L277>`__ are not yet supported.
 
 
 Development
@@ -72,3 +71,9 @@ Your life will be a lot better if you use a virtualenv when working with python.
 4. Actiavte the new virtualenv with ``source env/bin/activate``.
 5. Run ``make dev``
 6. Hack away!
+
+Running Tests
+=============
+
+Tests are stored in the ``tests/`` directory. You can run tests with `make test`.
+In order to run the integration tests you must have a valid ``CIRCLE_TOKEN`` set as an environment variable.
