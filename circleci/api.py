@@ -242,12 +242,10 @@ class Api():
             username,
             project,
             branch='master',
-            vcs_type='github'):
+            vcs_type='github',
+            params=None):
         """
         Triggers a new build.
-
-        # TODO support build params
-        # https://circleci.com/docs/1.0/parameterized-builds/
 
         Args:
             username (str):
@@ -259,6 +257,9 @@ class Api():
             vcs_type (str):
                 defaults to github
                 on circleci.com you can also pass in bitbucket
+            params (dict):
+                optional build parameters
+                https://circleci.com/docs/1.0/parameterized-builds/
 
         Endpoint:
             POST: /project/:vcs-type/:username/:project/tree/:branch
@@ -270,7 +271,7 @@ class Api():
             branch
         )
 
-        resp = self._request('POST', endpoint)
+        resp = self._request('POST', endpoint, params)
         return resp
 
 
@@ -293,7 +294,7 @@ class Api():
 #     Adds your Heroku API key to CircleCI, takes apikey as form param name.
 
 
-    def _request(self, verb, endpoint):
+    def _request(self, verb, endpoint, data=None):
         """Request a url.
 
         Args:
@@ -301,6 +302,8 @@ class Api():
                 The api endpoint we want to call
             verb (str):
                 POST or GET
+            params (dict):
+                optional build parameters
 
         Returns:
             A JSON object with the response from the API
@@ -318,7 +321,7 @@ class Api():
             resp = requests.get(request_url, auth=auth, headers=headers)
 
         elif verb == 'POST':
-            resp = requests.post(request_url, auth=auth, headers=headers)
+            resp = requests.post(request_url, auth=auth, headers=headers, data=data)
 
         else:
             raise BadHttpVerbError(verb, "verb must be GET or POST")
