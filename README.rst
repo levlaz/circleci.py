@@ -12,6 +12,8 @@ Python Wrapper around the CircleCI API
 Installation
 ============
 
+circleci.py requires Python 3. `Python 2 will be EOL <https://www.python.org/dev/peps/pep-0373/>`__ soon, it's time to make the switch.
+
 ::
 
     pip install circleci
