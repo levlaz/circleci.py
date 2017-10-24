@@ -73,7 +73,7 @@ Your life will be a lot better if you use a virtualenv when working with python.
 6. Hack away!
 
 Running Tests
-=============
+-------------
 
 Tests are stored in the ``tests/`` directory. You can run tests with ``make test``.
 In order to run the integration tests you must have a valid ``CIRCLE_TOKEN`` set as an environment variable.
