@@ -13,7 +13,7 @@ def readme():
 
 setup(
     name="circleci",
-    version="1.1.0.dev6",
+    version="1.1.0",
     description="Python wrapper for the CircleCI API",
     long_description=readme(),
     url="https://github.com/levlaz/circleci.py",
@@ -21,7 +21,7 @@ setup(
     author_email="lev@levlaz.org",
     license="MIT",
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "Intended Audience :: System Administrators",
         "License :: OSI Approved :: MIT License",

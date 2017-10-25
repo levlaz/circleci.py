@@ -59,6 +59,32 @@ CLASSES
      |          token (str):
      |              Your CircleCI token.abs
      |  
+     |  add_ssh_key(self, username, project, ssh_key, vcs_type='github', hostname=None)
+     |      Create an ssh key
+     |      
+     |      Used to access external systems that require SSH key-based authentication.
+     |      
+     |      Params:
+     |          username (str):
+     |              org or user name
+     |          project (str):
+     |              case sensitive repo name
+     |          branch (str):
+     |              defaults to master
+     |          ssh_key(str):
+     |              private rsa key
+     |      
+     |              note: this must be unencrypted
+     |          vcs_type (str):
+     |              defaults to github
+     |              on circleci.com you can also pass in bitbucket
+     |          hostname (str):
+     |              optional hostname, if set the key
+     |              will only work for this hostname.
+     |      
+     |      Endpoint:
+     |          POST: /project/:vcs-type/:username/:project/ssh-key
+     |  
      |  add_ssh_user(self, username, project, build_num, vcs_type='github')
      |      Adds a user to the build's SSH permissions.
      |      
@@ -92,6 +118,57 @@ CLASSES
      |      
      |      Endpoint:
      |          POST: /project/:vcs-type/:username/:project/:build_num/cancel
+     |  
+     |  clear_cache(self, username, project, vcs_type='github')
+     |      Clear cache for a project
+     |      
+     |      Args:
+     |          username (str):
+     |              org or user name
+     |          project (str):
+     |              case sensitive repo name
+     |          vcs_type (str):
+     |              defaults to github
+     |              on circleci.com you can also pass in bitbucket
+     |      
+     |      Endpoint:
+     |          DELETE: /project/:vcs-type/:username/:project/build-cache
+     |  
+     |  create_checkout_key(self, username, project, key_type, vcs_type='github')
+     |      Create a new checkout keys for a project
+     |      
+     |      Args:
+     |          username (str):
+     |              org or user name
+     |          project (str):
+     |              case sensitive repo name
+     |          key_type (str):
+     |              The type of key to create
+     |      
+     |              Can be 'deploy-key' or 'github-user-key'
+     |          vcs_type (str):
+     |              defaults to github
+     |              on circleci.com you can also pass in bitbucket
+     |      
+     |      Endpoint:
+     |          POST: /project/:vcs-type/:username/:project/checkout-key
+     |  
+     |  delete_checkout_key(self, username, project, fingerprint, vcs_type='github')
+     |      Delete a checkout key.
+     |      
+     |      Args:
+     |          username (str):
+     |              org or user name
+     |          project (str):
+     |              case sensitive repo name
+     |          fingerprint (str):
+     |              The fingerprint of the checkout key
+     |          vcs_type (str):
+     |              defaults to github
+     |              on circleci.com you can also pass in bitbucket
+     |      
+     |      Endpoint:
+     |          DELETE: /project/:vcs-type/:username/:project/checkout-key/:fingerprint
      |  
      |  follow_project(self, username, project, vcs_type='github')
      |      Follow a new project on CircleCI.
@@ -142,6 +219,23 @@ CLASSES
      |      Endpoint:
      |          GET: /project/:vcs-type/:username/:project/:build_num
      |  
+     |  get_checkout_key(self, username, project, fingerprint, vcs_type='github')
+     |      Get a checkout key.
+     |      
+     |      Args:
+     |          username (str):
+     |              org or user name
+     |          project (str):
+     |              case sensitive repo name
+     |          fingerprint (str):
+     |              The fingerprint of the checkout key
+     |          vcs_type (str):
+     |              defaults to github
+     |              on circleci.com you can also pass in bitbucket
+     |      
+     |      Endpoint:
+     |          GET: /project/:vcs-type/:username/:project/checkout-key/:fingerprint
+     |  
      |  get_project_build_summary(self, username, project, vcs_type='github')
      |      Build summary for each of the last 30 builds for a single git repo.
      |      
@@ -174,6 +268,21 @@ CLASSES
      |      
      |      Endpoint:
      |          GET: /me
+     |  
+     |  list_checkout_keys(self, username, project, vcs_type='github')
+     |      List checkout keys for a project
+     |      
+     |      Args:
+     |          username (str):
+     |              org or user name
+     |          project (str):
+     |              case sensitive repo name
+     |          vcs_type (str):
+     |              defaults to github
+     |              on circleci.com you can also pass in bitbucket
+     |      
+     |      Endpoint:
+     |          GET: /project/:vcs-type/:username/:project/checkout-key
      |  
      |  retry_build(self, username, project, build_num, vcs_type='github')
      |      Retries the build.

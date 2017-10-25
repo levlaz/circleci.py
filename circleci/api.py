@@ -10,6 +10,8 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 from circleci.error import BadHttpVerbError
+from circleci.error import BadKeyTypeError
+
 
 class Api():
     """A python interface into the CircleCI API"""
@@ -274,25 +276,190 @@ class Api():
         resp = self._request('POST', endpoint, params)
         return resp
 
+    def add_ssh_key(
+            self,
+            username,
+            project,
+            ssh_key,
+            vcs_type='github',
+            hostname=None):
+        """Create an ssh key
 
-# TODO support the rest of these methods
-# POST: /project/:vcs-type/:username/:project/ssh-key
-#     Create an ssh key used to access external systems that require SSH key-based authentication
-# GET: /project/:vcs-type/:username/:project/checkout-key
-#     Lists checkout keys.
-# POST: /project/:vcs-type/:username/:project/checkout-key
-#     Create a new checkout key.
-# GET: /project/:vcs-type/:username/:project/checkout-key/:fingerprint
-#     Get a checkout key.
-# DELETE: /project/:vcs-type/:username/:project/checkout-key/:fingerprint
-#     Delete a checkout key.
-# DELETE: /project/:vcs-type/:username/:project/build-cache
-#     Clears the cache for a project.
-# POST: /user/ssh-key
-#     Adds a CircleCI key to your GitHub User account.
-# POST: /user/heroku-key
-#     Adds your Heroku API key to CircleCI, takes apikey as form param name.
+        Used to access external systems that require SSH key-based authentication.
 
+        Params:
+            username (str):
+                org or user name
+            project (str):
+                case sensitive repo name
+            branch (str):
+                defaults to master
+            ssh_key(str):
+                private rsa key
+
+                note: this must be unencrypted
+            vcs_type (str):
+                defaults to github
+                on circleci.com you can also pass in bitbucket
+            hostname (str):
+                optional hostname, if set the key
+                will only work for this hostname.
+
+        Endpoint:
+            POST: /project/:vcs-type/:username/:project/ssh-key
+        """
+        endpoint = 'project/{0}/{1}/{2}/ssh-key'.format(
+            vcs_type,
+            username,
+            project
+        )
+
+        params = {
+            "hostname": hostname,
+            "private_key": ssh_key
+        }
+
+        resp = self._request('POST', endpoint, data=params)
+        return resp
+
+    def list_checkout_keys(self, username, project, vcs_type='github'):
+        """List checkout keys for a project
+
+        Args:
+            username (str):
+                org or user name
+            project (str):
+                case sensitive repo name
+            vcs_type (str):
+                defaults to github
+                on circleci.com you can also pass in bitbucket
+
+        Endpoint:
+            GET: /project/:vcs-type/:username/:project/checkout-key
+        """
+        endpoint = 'project/{0}/{1}/{2}/checkout-key'.format(
+            vcs_type,
+            username,
+            project
+        )
+
+        resp = self._request('GET', endpoint)
+        return resp
+
+    def create_checkout_key(self, username, project, key_type, vcs_type='github'):
+        """Create a new checkout keys for a project
+
+        Args:
+            username (str):
+                org or user name
+            project (str):
+                case sensitive repo name
+            key_type (str):
+                The type of key to create
+
+                Can be 'deploy-key' or 'github-user-key'
+            vcs_type (str):
+                defaults to github
+                on circleci.com you can also pass in bitbucket
+
+        Endpoint:
+            POST: /project/:vcs-type/:username/:project/checkout-key
+        """
+        valid_types = ['deploy-key', 'github-user-key']
+
+        if key_type not in valid_types:
+            raise BadKeyTypeError(key_type, "key_type must be deploy-key or github-user-key")
+
+        params = {
+            "type": key_type
+        }
+
+        endpoint = 'project/{0}/{1}/{2}/checkout-key'.format(
+            vcs_type,
+            username,
+            project
+        )
+
+        resp = self._request('POST', endpoint, data=params)
+        return resp
+
+    def get_checkout_key(self, username, project, fingerprint, vcs_type='github'):
+        """Get a checkout key.
+
+        Args:
+            username (str):
+                org or user name
+            project (str):
+                case sensitive repo name
+            fingerprint (str):
+                The fingerprint of the checkout key
+            vcs_type (str):
+                defaults to github
+                on circleci.com you can also pass in bitbucket
+
+        Endpoint:
+            GET: /project/:vcs-type/:username/:project/checkout-key/:fingerprint
+        """
+        endpoint = 'project/{0}/{1}/{2}/checkout-key/{3}'.format(
+            vcs_type,
+            username,
+            project,
+            fingerprint
+        )
+
+        resp = self._request('GET', endpoint)
+
+        return resp
+
+    def delete_checkout_key(self, username, project, fingerprint, vcs_type='github'):
+        """Delete a checkout key.
+
+        Args:
+            username (str):
+                org or user name
+            project (str):
+                case sensitive repo name
+            fingerprint (str):
+                The fingerprint of the checkout key
+            vcs_type (str):
+                defaults to github
+                on circleci.com you can also pass in bitbucket
+
+        Endpoint:
+            DELETE: /project/:vcs-type/:username/:project/checkout-key/:fingerprint
+        """
+        endpoint = 'project/{0}/{1}/{2}/checkout-key/{3}'.format(
+            vcs_type,
+            username,
+            project,
+            fingerprint
+        )
+
+        resp = self._request('DELETE', endpoint)
+        return resp
+
+    def clear_cache(self, username, project, vcs_type='github'):
+        """Clear cache for a project
+
+        Args:
+            username (str):
+                org or user name
+            project (str):
+                case sensitive repo name
+            vcs_type (str):
+                defaults to github
+                on circleci.com you can also pass in bitbucket
+
+        Endpoint:
+            DELETE: /project/:vcs-type/:username/:project/build-cache
+        """
+        endpoint = 'project/{0}/{1}/{2}/build-cache'.format(
+            vcs_type,
+            username,
+            project
+        )
+        resp = self._request('DELETE', endpoint)
+        return resp
 
     def _request(self, verb, endpoint, data=None):
         """Request a url.
@@ -322,8 +489,10 @@ class Api():
 
         elif verb == 'POST':
             resp = requests.post(request_url, auth=auth, headers=headers, data=data)
+        elif verb == 'DELETE':
+            resp = requests.delete(request_url, auth=auth, headers=headers)
 
         else:
-            raise BadHttpVerbError(verb, "verb must be GET or POST")
+            raise BadHttpVerbError(verb, "verb must be GET, POST, or DELETE")
 
         return resp.json()

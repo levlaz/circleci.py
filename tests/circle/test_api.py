@@ -7,11 +7,12 @@ import os
 from unittest.mock import MagicMock, patch
 from circleci.api import Api
 from circleci.error import BadHttpVerbError
+from circleci.error import BadKeyTypeError
 
 class TestCircleCIApi(unittest.TestCase):
 
     def setUp(self):
-        self.c = Api('fake-token')
+        self.c = Api(os.getenv('CIRCLE_TOKEN'))
 
     def loadMock(self, filename):
         """helper function to open mock responses"""
@@ -26,7 +27,7 @@ class TestCircleCIApi(unittest.TestCase):
             self.c._request('BAD', 'dummy')
 
         self.assertEqual('BAD', e.exception.verb)
-        self.assertIn('GET or POST', e.exception.message)
+        self.assertIn('GET, POST, or DELETE', e.exception.message)
 
     def test_get_user_info(self):
         self.loadMock('mock_user_info_response')
@@ -93,15 +94,55 @@ class TestCircleCIApi(unittest.TestCase):
         self.assertEqual(resp['reponame'], 'MOCK+testing')
         self.assertEqual(resp['ssh_users'][0]['login'], 'ccie-tester')
 
-    # def test_add_ssh_key(self):
-    #     resp = self.c.create_ssh_key('ccie-tester', 'testing')
-    #     with open('tests/mocks/mock_create_ssh_key_response', 'w') as f:
-    #          json.dump(resp, f)
-
-    #     print(resp)
-
     def test_trigger_build(self):
         self.loadMock('mock_trigger_build_response')
         resp = json.loads(self.c.trigger_build('ccie-tester', 'testing'))
 
         self.assertEqual(resp['reponame'], 'MOCK+testing')
+
+    def test_list_checkout_keys(self):
+        self.loadMock('mock_list_checkout_keys_response')
+        resp = json.loads(self.c.list_checkout_keys('levlaz', 'circleci-sandbox'))
+
+        self.assertEqual(resp[0]['type'], 'deploy-key')
+        self.assertIn('public_key', resp[0])
+
+    def test_create_checkout_key(self):
+
+        with self.assertRaises(BadKeyTypeError) as e:
+            self.c.create_checkout_key('levlaz', 'test', 'bad')
+
+        self.assertEqual('bad', e.exception.key_type)
+        self.assertIn('deploy-key', e.exception.message)
+
+        self.loadMock('mock_create_checkout_key_response')
+        resp = json.loads(self.c.create_checkout_key('levlaz', 'test', 'deploy-key'))
+
+        self.assertEqual(resp['type'], 'deploy-key')
+        self.assertIn('public_key', resp)
+
+    def test_get_checkout_key(self):
+
+        self.loadMock('mock_get_checkout_key_response')
+        resp = json.loads(self.c.get_checkout_key('levlaz', 'circleci-sandbox', '94:19:ab:a9:f4:2b:21:1c:a5:87:dd:ee:3d:c2:90:4e'))
+
+        self.assertEqual(resp['type'], 'deploy-key')
+        self.assertIn('public_key', resp)
+
+    def test_delete_checkout_key(self):
+        self.loadMock('mock_delete_checkout_key_response')
+        resp = json.loads(self.c.delete_checkout_key('levlaz', 'circleci-sandbox', '94:19:ab:a9:f4:2b:21:1c:a5:87:dd:ee:3d:c2:90:4e'))
+
+        self.assertEqual(resp['message'], 'ok')
+
+    def test_clear_cache(self):
+        self.loadMock('mock_clear_cache_response')
+        resp = json.loads(self.c.clear_cache('levlaz', 'circleci-sandbox'))
+
+        self.assertEqual('build dependency caches deleted', resp['status'])
+
+    # def test_helper(self):
+    #     resp = self.c.add_circle_key()
+    #     print(resp)
+    #     with open('tests/mocks/mock_add_circle_key_response', 'w') as f:
+    #          json.dump(resp, f)

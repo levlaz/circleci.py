@@ -97,11 +97,6 @@ Sample Output (truncated for readability)
 
     ...
 
-Limitations
-===========
-
-1. `These endpoints <https://github.com/levlaz/circleci.py/blob/master/circleci/api.py#L277>`__ are not yet supported.
-
 
 Development
 ===========
