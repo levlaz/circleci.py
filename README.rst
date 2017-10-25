@@ -57,6 +57,46 @@ Features
 1. Supports the `latest v1.1 of the CircleCI API <https://circleci.com/docs/api/v1-reference/>`__.
 2. Supports both circleci.com and `CircleCI server <https://circleci.com/enterprise/>`__ (aka "Enterprise").
 
+Experimental Features
+---------------------
+
+**WARNING:**
+All methods here work against the **UNDOCUMENTED** and **UNSUPPORTED** CircleCI
+API. Subject to change at any moment. Use at your own risk.
+
+* Retry a build without cache
+
+::
+
+    from circleci.experimental import Experimental
+
+    circleci = Experimental("$YOUR_TOKEN")
+    circleci.retry_no_cache('$USERNAME', '$PROJECT', '$BUILD_NUMBER')
+
+Sample Output (truncated for readability)
+
+::
+
+    'author_date': '2017-10-24T12:00:27-07:00',
+    'author_email': 'lev@circleci.com',
+    'author_name': 'Lev Lazinskiy',
+    'body': '',
+    'branch': 'master',
+    'build_num': 21,
+    'fail_reason': None,
+    'failed': None,
+    'infrastructure_fail': False,
+    'is_first_green_build': False,
+    'job_name': None,
+    'lifecycle': 'scheduled',
+    'messages': [],
+
+    ...
+
+    'no_dependency_cache': True,
+
+    ...
+
 Limitations
 ===========
 
