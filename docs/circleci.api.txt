@@ -164,11 +164,8 @@ CLASSES
      |      Endpoint:
      |          POST: /project/:vcs-type/:username/:project/:build_num/retry
      |  
-     |  trigger_build(self, username, project, branch='master', vcs_type='github')
+     |  trigger_build(self, username, project, branch='master', vcs_type='github', params=None)
      |      Triggers a new build.
-     |      
-     |      # TODO support build params
-     |      # https://circleci.com/docs/1.0/parameterized-builds/
      |      
      |      Args:
      |          username (str):
@@ -180,6 +177,9 @@ CLASSES
      |          vcs_type (str):
      |              defaults to github
      |              on circleci.com you can also pass in bitbucket
+     |          params (dict):
+     |              optional build parameters
+     |              https://circleci.com/docs/1.0/parameterized-builds/
      |      
      |      Endpoint:
      |          POST: /project/:vcs-type/:username/:project/tree/:branch
