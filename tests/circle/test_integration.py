@@ -1,12 +1,13 @@
 # pylint: disable-all
-import unittest
 import json
-import pprint
 import os
-
+import pprint
+import unittest
 from unittest.mock import MagicMock, patch
+
 from circleci.api import Api
-from circleci.error import BadHttpVerbError
+from circleci.error import BadKeyError, BadVerbError, InvalidFilterError
+
 
 class TestCircleCIApi(unittest.TestCase):
 

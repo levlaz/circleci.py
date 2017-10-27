@@ -5,48 +5,39 @@ CircleCI API Error Module
 :copyright: (c) 2017 by Lev Lazinskiy
 :license: MIT, see LICENSE for more details.
 """
-class CircleCIError(Exception):
-    """Base class for CircleCI errors"""
-    pass
-
-
-class BadHttpVerbError(CircleCIError):
-    """Exception raises for bad HTTP verb
+class CircleCIException(Exception):
+    """Base class for CircleCI exceptions
 
     Args:
-        verb (str):
-            HTTP Verb that was tried
-        message (str):
-            explanation message
+        argument: The argument that was passed into the function.
+        message: explanation message.
     """
-    def __init__(self, verb, message):
-        self.verb = verb
-        self.message = message
+    def __init__(self, argument):
+        super().__init__()
+        self.argument = argument
+        self.message = None
+
+    def __str__(self):
+        return '{0} is invalid. {1}'.format(self.argument, self.message)
 
 
-class BadKeyTypeError(CircleCIError):
-    """Exception raises for bad Key Type
-
-    Args:
-        key_type (str):
-            Value passed in for key_type
-        message (str):
-            explanation message
-    """
-    def __init__(self, key_type, message):
-        self.key_type = key_type
-        self.message = message
+class BadVerbError(CircleCIException):
+    """Exception raises for bad HTTP verb"""
+    def __init__(self, argument):
+        super().__init__(argument)
+        self.message = "verb must be one of 'GET', 'POST', or 'DELETE'"
 
 
-class InvalidFilterException(CircleCIError):
-    """Exception raises for an invalid filter
+class BadKeyError(CircleCIException):
+    """Exception raises for bad Key Type"""
+    def __init__(self, argument):
+        super().__init__(argument)
+        self.message = "key must be one of 'deploy-key' or 'github-user-key'"
 
-    Args:
-        status_filter (str):
-            Value passed for invalid filter
-        message (str):
-            explanation message
-    """
-    def __init__(self, status_filter, message):
-        self.status_filter = status_filter
-        self.message = message
+
+class InvalidFilterError(CircleCIException):
+    """Exception raises for an invalid filter"""
+    def __init__(self, argument):
+        super().__init__(argument)
+        self.message = "status_filter must be one of 'completed'" \
+            "'successful', 'failed', or 'running'"
