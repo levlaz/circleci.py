@@ -229,9 +229,14 @@ CLASSES
      |      Endpoint:
      |          GET: /projects
      |  
-     |  get_recent_builds(self)
+     |  get_recent_builds(self, limit=30, offset=0)
      |      Build summary for each of the last 30 recent builds, ordered by build_num.
      |      
+     |      Args:
+     |          limit (int) (optional):
+     |              The number of builds to return. Maximum 100, defaults to 30.
+     |          offset (int) (optional):
+     |              The API returns builds starting from this offset, defaults to 0.
      |      Endpoint:
      |          GET: /recent-builds
      |  

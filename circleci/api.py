@@ -98,14 +98,21 @@ class Api():
         resp = self._request('GET', endpoint)
         return resp
 
-    def get_recent_builds(self):
+    def get_recent_builds(self, limit=30, offset=0):
         """
         Build summary for each of the last 30 recent builds, ordered by build_num.
 
+        Args:
+            limit (int) (optional):
+                The number of builds to return. Maximum 100, defaults to 30.
+            offset (int) (optional):
+                The API returns builds starting from this offset, defaults to 0.
         Endpoint:
             GET: /recent-builds
         """
-        resp = self._request('GET', 'recent-builds')
+        endpoint = 'recent-builds?limit={0}&offset={1}'.format(limit, offset)
+
+        resp = self._request('GET', endpoint)
         return resp
 
     def get_build_info(self, username, project, build_num, vcs_type='github'):
