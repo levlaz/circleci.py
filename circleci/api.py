@@ -6,12 +6,10 @@ CircleCI API Module
 :license: MIT, see LICENSE for more details.
 """
 import requests
-
 from requests.auth import HTTPBasicAuth
 
-from circleci.error import BadHttpVerbError
-from circleci.error import BadKeyTypeError
-from circleci.error import InvalidFilterException
+from circleci.error import BadKeyError, BadVerbError, InvalidFilterError
+
 
 class Api():
     """A python interface into the CircleCI API"""
@@ -110,9 +108,7 @@ class Api():
         valid_filters = [None, 'completed', 'successful', 'failed', 'running']
 
         if status_filter not in valid_filters:
-            raise InvalidFilterException(
-                status_filter,
-                "status_filter must be on of 'completed', 'successful', 'failed', 'running'")
+            raise InvalidFilterError(status_filter)
 
         if branch:
             endpoint = 'project/{0}/{1}/{2}/tree/{3}?limit={4}&offset={5}&filter={6}'.format(
@@ -414,7 +410,7 @@ class Api():
         valid_types = ['deploy-key', 'github-user-key']
 
         if key_type not in valid_types:
-            raise BadKeyTypeError(key_type, "key_type must be deploy-key or github-user-key")
+            raise BadKeyError(key_type)
 
         params = {
             "type": key_type
@@ -539,6 +535,6 @@ class Api():
             resp = requests.delete(request_url, auth=auth, headers=headers)
 
         else:
-            raise BadHttpVerbError(verb, "verb must be GET, POST, or DELETE")
+            raise BadVerbError(verb)
 
         return resp.json()

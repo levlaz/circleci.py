@@ -1,13 +1,13 @@
 # pylint: disable-all
-import unittest
 import json
-import pprint
 import os
+import pprint
+import unittest
+from unittest.mock import MagicMock
 
-from unittest.mock import MagicMock, patch
 from circleci.api import Api
-from circleci.error import BadHttpVerbError
-from circleci.error import BadKeyTypeError
+from circleci.error import BadKeyError, BadVerbError, InvalidFilterError
+
 
 class TestCircleCIApi(unittest.TestCase):
 
@@ -23,11 +23,11 @@ class TestCircleCIApi(unittest.TestCase):
 
     def test_bad_verb(self):
 
-        with self.assertRaises(BadHttpVerbError) as e:
+        with self.assertRaises(BadVerbError) as e:
             self.c._request('BAD', 'dummy')
 
-        self.assertEqual('BAD', e.exception.verb)
-        self.assertIn('GET, POST, or DELETE', e.exception.message)
+        self.assertEqual('BAD', e.exception.argument)
+        self.assertIn('DELETE', e.exception.message)
 
     def test_get_user_info(self):
         self.loadMock('mock_user_info_response')
@@ -53,6 +53,13 @@ class TestCircleCIApi(unittest.TestCase):
 
         self.assertEqual(len(resp), 6)
         self.assertEqual(resp[0]['username'], 'MOCK+ccie-tester')
+
+        # with invalid status filter
+        with self.assertRaises(InvalidFilterError) as e:
+            json.loads(self.c.get_project_build_summary('ccie-tester', 'testing', status_filter='dummy'))
+
+        self.assertEqual('dummy', e.exception.argument)
+        self.assertIn('running', e.exception.message)
 
     def test_get_recent_builds(self):
         self.loadMock('mock_get_recent_builds_response')
@@ -109,10 +116,10 @@ class TestCircleCIApi(unittest.TestCase):
 
     def test_create_checkout_key(self):
 
-        with self.assertRaises(BadKeyTypeError) as e:
+        with self.assertRaises(BadKeyError) as e:
             self.c.create_checkout_key('levlaz', 'test', 'bad')
 
-        self.assertEqual('bad', e.exception.key_type)
+        self.assertEqual('bad', e.exception.argument)
         self.assertIn('deploy-key', e.exception.message)
 
         self.loadMock('mock_create_checkout_key_response')
