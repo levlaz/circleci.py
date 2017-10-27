@@ -61,6 +61,12 @@ class TestCircleCIApi(unittest.TestCase):
         self.assertEqual('dummy', e.exception.argument)
         self.assertIn('running', e.exception.message)
 
+        # with branch
+        resp = json.loads(self.c.get_project_build_summary('ccie-tester', 'testing', branch='master'))
+
+        self.assertEqual(len(resp), 6)
+        self.assertEqual(resp[0]['username'], 'MOCK+ccie-tester')
+
     def test_get_recent_builds(self):
         self.loadMock('mock_get_recent_builds_response')
         resp = json.loads(self.c.get_recent_builds())

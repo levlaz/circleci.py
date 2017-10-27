@@ -6,6 +6,7 @@ import unittest
 from unittest.mock import MagicMock, patch
 
 from circleci.api import Api
+from circleci.experimental import Experimental
 from circleci.error import BadKeyError, BadVerbError, InvalidFilterError
 
 
@@ -60,3 +61,23 @@ rAUZ8tU0o5Ec6T0ZQkcous7OwBZGE+JLuFa3S6JfISLw42brjQ9dE5mosm7m2d4H
         # there is no response when success, so we test to make sure
         # that there is no other message as well.
         self.assertTrue(len(resp) == 0)
+
+    def test_get_user_info(self):
+        # exercise a real "GET"
+        resp = self.c.get_user_info()
+
+        self.assertEqual(resp['login'], 'levlaz')
+
+    def test_clear_cache(self):
+        # execrise a real "DELETE"
+        resp = self.c.clear_cache('levlaz', 'circleci-sandbox')
+
+        self.assertEqual(resp['status'], 'build dependency caches deleted')
+
+    def test_retry_build_no_cache(self):
+        # use Experimental API
+        self.e = Experimental(os.getenv('CIRCLE_TOKEN'))
+
+        resp = self.e.retry_no_cache('levlaz', 'circleci-sandbox', 1)
+
+        self.assertTrue(resp['no_dependency_cache'])
