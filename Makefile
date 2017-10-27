@@ -12,6 +12,7 @@ clean:
 
 dev:
 	pip install coverage
+	pip install codecov
 	pip install pylint
 	pip install twine
 	pip install -e .

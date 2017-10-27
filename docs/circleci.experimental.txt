@@ -236,7 +236,7 @@ CLASSES
      |      Endpoint:
      |          GET: /project/:vcs-type/:username/:project/checkout-key/:fingerprint
      |  
-     |  get_project_build_summary(self, username, project, vcs_type='github')
+     |  get_project_build_summary(self, username, project, limit=30, offset=0, status_filter=None, branch=None, vcs_type='github')
      |      Build summary for each of the last 30 builds for a single git repo.
      |      
      |      Args:
@@ -244,6 +244,15 @@ CLASSES
      |              org or user name
      |          project (str):
      |              case sensitive repo name
+     |          limit (int) (optional):
+     |              The number of builds to return. Maximum 100, defaults to 30.
+     |          offset (int) (optional):
+     |              The API returns builds starting from this offset, defaults to 0.
+     |          status_filter (str) (optional):
+     |              Restricts which builds are returned. Set to "completed", "successful",
+     |              "failed", "running", or defaults to no filter.
+     |          branch (str) (optional):
+     |              Narrow returned builds to a single branch.
      |          vcs_type (str):
      |              defaults to github
      |              on circleci.com you can also pass in bitbucket
@@ -257,9 +266,14 @@ CLASSES
      |      Endpoint:
      |          GET: /projects
      |  
-     |  get_recent_builds(self)
+     |  get_recent_builds(self, limit=30, offset=0)
      |      Build summary for each of the last 30 recent builds, ordered by build_num.
      |      
+     |      Args:
+     |          limit (int) (optional):
+     |              The number of builds to return. Maximum 100, defaults to 30.
+     |          offset (int) (optional):
+     |              The API returns builds starting from this offset, defaults to 0.
      |      Endpoint:
      |          GET: /recent-builds
      |  

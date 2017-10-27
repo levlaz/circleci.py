@@ -11,7 +11,7 @@ from requests.auth import HTTPBasicAuth
 
 from circleci.error import BadHttpVerbError
 from circleci.error import BadKeyTypeError
-
+from circleci.error import InvalidFilterException
 
 class Api():
     """A python interface into the CircleCI API"""
@@ -75,7 +75,15 @@ class Api():
         resp = self._request('POST', endpoint)
         return resp
 
-    def get_project_build_summary(self, username, project, vcs_type='github'):
+    def get_project_build_summary(
+            self,
+            username,
+            project,
+            limit=30,
+            offset=0,
+            status_filter=None,
+            branch=None,
+            vcs_type='github'):
         """Build summary for each of the last 30 builds for a single git repo.
 
         Args:
@@ -83,6 +91,15 @@ class Api():
                 org or user name
             project (str):
                 case sensitive repo name
+            limit (int) (optional):
+                The number of builds to return. Maximum 100, defaults to 30.
+            offset (int) (optional):
+                The API returns builds starting from this offset, defaults to 0.
+            status_filter (str) (optional):
+                Restricts which builds are returned. Set to "completed", "successful",
+                "failed", "running", or defaults to no filter.
+            branch (str) (optional):
+                Narrow returned builds to a single branch.
             vcs_type (str):
                 defaults to github
                 on circleci.com you can also pass in bitbucket
@@ -90,22 +107,51 @@ class Api():
         Endpoint:
             GET: /project/:vcs-type/:username/:project
         """
-        endpoint = 'project/{0}/{1}/{2}'.format(
-            vcs_type,
-            username,
-            project
-        )
+        valid_filters = [None, 'completed', 'successful', 'failed', 'running']
+
+        if status_filter not in valid_filters:
+            raise InvalidFilterException(
+                status_filter,
+                "status_filter must be on of 'completed', 'successful', 'failed', 'running'")
+
+        if branch:
+            endpoint = 'project/{0}/{1}/{2}/tree/{3}?limit={4}&offset={5}&filter={6}'.format(
+                vcs_type,
+                username,
+                project,
+                branch,
+                limit,
+                offset,
+                status_filter
+            )
+        else:
+            endpoint = 'project/{0}/{1}/{2}?limit={3}&offset={4}&filter={5}'.format(
+                vcs_type,
+                username,
+                project,
+                limit,
+                offset,
+                status_filter
+            )
+
         resp = self._request('GET', endpoint)
         return resp
 
-    def get_recent_builds(self):
+    def get_recent_builds(self, limit=30, offset=0):
         """
         Build summary for each of the last 30 recent builds, ordered by build_num.
 
+        Args:
+            limit (int) (optional):
+                The number of builds to return. Maximum 100, defaults to 30.
+            offset (int) (optional):
+                The API returns builds starting from this offset, defaults to 0.
         Endpoint:
             GET: /recent-builds
         """
-        resp = self._request('GET', 'recent-builds')
+        endpoint = 'recent-builds?limit={0}&offset={1}'.format(limit, offset)
+
+        resp = self._request('GET', endpoint)
         return resp
 
     def get_build_info(self, username, project, build_num, vcs_type='github'):

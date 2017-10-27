@@ -36,3 +36,17 @@ class BadKeyTypeError(CircleCIError):
     def __init__(self, key_type, message):
         self.key_type = key_type
         self.message = message
+
+
+class InvalidFilterException(CircleCIError):
+    """Exception raises for an invalid filter
+
+    Args:
+        status_filter (str):
+            Value passed for invalid filter
+        message (str):
+            explanation message
+    """
+    def __init__(self, status_filter, message):
+        self.status_filter = status_filter
+        self.message = message

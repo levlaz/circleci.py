@@ -13,6 +13,7 @@ find . -name "*.py" | \
   grep -v "./env/" | \
   grep -v "./tests/" | \
   grep -v "setup.py" | \
+  grep -v "build" | \
   while read line; do
     pydoc $line > docs/$(echo $line | sed 's/\//./g' | sed 's/..//' | sed 's/.py/.txt/')
   done
