@@ -286,6 +286,23 @@ CLASSES
      |      Endpoint:
      |          GET: /recent-builds
      |  
+     |  get_test_metadata(self, username, project, build_num, vcs_type='github')
+     |      Provides test metadata for a build
+     |      
+     |      Args:
+     |          username (str):
+     |              org or user name
+     |          project (str):
+     |              case sensitive repo name
+     |          build_num (str):
+     |              build number
+     |          vcs_type (str):
+     |              defaults to github
+     |              on circleci.com you can also pass in bitbucket
+     |      
+     |      Endpoint:
+     |          GET: /project/:vcs-type/:username/:project/:build_num/tests
+     |  
      |  get_user_info(self)
      |      Provides information about the signed in user.
      |      

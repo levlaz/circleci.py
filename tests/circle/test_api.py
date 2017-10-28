@@ -154,8 +154,15 @@ class TestCircleCIApi(unittest.TestCase):
 
         self.assertEqual('build dependency caches deleted', resp['status'])
 
+    def test_get_test_metadata(self):
+        self.loadMock('mock_get_test_metadata_response')
+        resp = json.loads(self.c.get_test_metadata('levlaz', 'circleci-demo-javascript-express', 127))
+
+        self.assertEqual(len(resp), 2)
+        self.assertIn('tests', resp)
+
     # def test_helper(self):
-    #     resp = self.c.add_circle_key()
+    #     resp = self.c.get_test_metadata('levlaz', 'circleci-demo-javascript-express', 127)
     #     print(resp)
-    #     with open('tests/mocks/mock_add_circle_key_response', 'w') as f:
+    #     with open('tests/mocks/mock_get_test_metadata_response', 'w') as f:
     #          json.dump(resp, f)

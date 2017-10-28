@@ -519,6 +519,33 @@ class Api():
         resp = self._request('POST', 'user/heroku-key', data=params)
         return resp
 
+    def get_test_metadata(self, username, project, build_num, vcs_type='github'):
+        """Provides test metadata for a build
+
+        Args:
+            username (str):
+                org or user name
+            project (str):
+                case sensitive repo name
+            build_num (str):
+                build number
+            vcs_type (str):
+                defaults to github
+                on circleci.com you can also pass in bitbucket
+
+        Endpoint:
+            GET: /project/:vcs-type/:username/:project/:build_num/tests
+        """
+        endpoint = 'project/{0}/{1}/{2}/{3}/tests'.format(
+            vcs_type,
+            username,
+            project,
+            build_num
+        )
+
+        resp = self._request('GET', endpoint)
+        return resp
+
     def _request(self, verb, endpoint, data=None):
         """Request a url.
 
