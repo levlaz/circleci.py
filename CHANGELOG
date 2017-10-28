@@ -1,0 +1,21 @@
+Changelog
+=========
+
+Here you can see the full list of changes between each circleci.py release.
+
+Version 1.1.0
+-------------
+
+Released on October 25, 2017
+
+- Basic project tooling put into place.
+
+    - Continuous Integration with CircleCI
+    - Packaging and uploading to PyPI
+    - Code Coverage
+    - Testing with unittest
+
+- Basic Documentation in place
+- Add support for using the API with a token with both circleci.com and CircleCI Server
+- Add support for most basic API endpoints that deal with projects and builds
+- Add Experimental API for using API methods that are undocumented

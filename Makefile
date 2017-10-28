@@ -15,12 +15,13 @@ dev:
 	pip install codecov
 	pip install pylint
 	pip install twine
+	pip install sphinx
+	pip install sphinx-autobuild
+	pip install sphinx_rtd_theme
 	pip install -e .
 
 docs:
-	@echo "... generating docs"
-	bash scripts/make_docs.sh
-	ls -l docs
+	$(MAKE) -C docs html
 
 package:
 	python setup.py sdist

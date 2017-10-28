@@ -12,6 +12,9 @@ Python Wrapper around the CircleCI API
 .. image:: https://badge.fury.io/py/circleci.svg
     :target: https://badge.fury.io/py/circleci
 
+.. image:: https://readthedocs.org/projects/circlecipy/badge/?version=latest
+    :target: http://circlecipy.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
 
 Installation
 ============

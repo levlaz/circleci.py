@@ -2,8 +2,10 @@
 """
 CircleCI Experimental API Module
 
-WARNING: All methods here work against the UNDOCUMENTED and UNSUPPORTED CircleCI
-API. Subject to change at any moment. Use at your own risk
+.. admonition:: Notice
+
+    All methods here work against **undocumented** and **unsupported** aspects of the
+    CircleCI API. Subject to change at any moment. Use at your own risk.
 
 :copyright: (c) 2017 by Lev Lazinskiy
 :license: MIT, see LICENSE for more details.
