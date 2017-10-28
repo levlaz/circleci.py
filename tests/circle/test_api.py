@@ -161,8 +161,35 @@ class TestCircleCIApi(unittest.TestCase):
         self.assertEqual(len(resp), 2)
         self.assertIn('tests', resp)
 
+    def test_list_envvars(self):
+        self.loadMock('mock_list_envvars_response')
+        resp = json.loads(self.c.list_envvars('levlaz', 'circleci-sandbox'))
+
+        self.assertEqual(len(resp), 4)
+        self.assertEqual(resp[0]['name'], 'BAR')
+
+    def test_add_envvar(self):
+        self.loadMock('mock_add_envvar_response')
+        resp = json.loads(self.c.add_envvar('levlaz', 'circleci-sandbox', 'foo', 'bar'))
+
+        self.assertEqual(resp['name'], 'foo')
+        self.assertNotEqual(resp['value'], 'bar')
+
+    def test_get_envvar(self):
+        self.loadMock('mock_get_envvar_response')
+        resp = json.loads(self.c.get_envvar('levlaz', 'circleci-sandbox', 'foo'))
+
+        self.assertEqual(resp['name'], 'foo')
+        self.assertNotEqual(resp['value'], 'bar')
+
+    def test_delete_envvar(self):
+        self.loadMock('mock_delete_envvar_response')
+        resp = json.loads(self.c.delete_envvar('levlaz', 'circleci-sandbox', 'foo'))
+
+        self.assertEqual(resp['message'], 'ok')
+
     # def test_helper(self):
-    #     resp = self.c.get_test_metadata('levlaz', 'circleci-demo-javascript-express', 127)
+    #     resp = self.c.delete_envvar('levlaz', 'circleci-sandbox', 'foo')
     #     print(resp)
-    #     with open('tests/mocks/mock_get_test_metadata_response', 'w') as f:
+    #     with open('tests/mocks/mock_delete_envvar_response', 'w') as f:
     #          json.dump(resp, f)

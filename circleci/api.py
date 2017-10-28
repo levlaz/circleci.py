@@ -546,6 +546,109 @@ class Api():
         resp = self._request('GET', endpoint)
         return resp
 
+    def list_envvars(self, username, project, vcs_type='github'):
+        """Provides list of environment variables for a project
+
+        Args:
+            username (str):
+                org or user name
+            project (str):
+                case sensitive repo name
+            vcs_type (str):
+                defaults to github
+                on circleci.com you can also pass in bitbucket
+
+        Endpoint:
+            GET: /project/:vcs-type/:username/:project/envvar
+        """
+        endpoint = 'project/{0}/{1}/{2}/envvar'.format(
+            vcs_type,
+            username,
+            project
+        )
+
+        resp = self._request('GET', endpoint)
+        return resp
+
+    def add_envvar(self, username, project, name, value, vcs_type='github'):
+        """Adds an environment variable to a project
+
+        Args:
+            username (str):
+                org or user name
+            project (str):
+                case sensitive repo name
+            name: name of the envvar
+            value: value of the envvar
+            vcs_type (str):
+                defaults to github
+                on circleci.com you can also pass in bitbucket
+
+        Endpoint:
+            POST: /project/:vcs-type/:username/:project/envvar
+        """
+        params = {
+            "name": name,
+            "value": value
+        }
+
+        endpoint = 'project/{0}/{1}/{2}/envvar'.format(
+            vcs_type,
+            username,
+            project
+        )
+
+        resp = self._request('POST', endpoint, data=params)
+        return resp
+
+    def get_envvar(self, username, project, name, vcs_type='github'):
+        """Gets the hidden value of an environment variable
+
+        Args:
+            username: org or user name
+            project: case sensitive repo name
+            name: name of the envvar
+            vcs_type: defaults to github
+                on circleci.com you can also pass in bitbucket
+
+        Endpoint:
+            GET /project/:vcs-type/:username/:project/envvar/:name
+        """
+        endpoint = 'project/{0}/{1}/{2}/envvar/{3}'.format(
+            vcs_type,
+            username,
+            project,
+            name
+        )
+
+        resp = self._request('GET', endpoint)
+
+        return resp
+
+    def delete_envvar(self, username, project, name, vcs_type='github'):
+        """Delete an environment variable
+
+        Args:
+            username: org or user name
+            project: case sensitive repo name
+            name: name of the envvar
+            vcs_type: defaults to github
+                on circleci.com you can also pass in bitbucket
+
+        Endpoint:
+            DELETE /project/:vcs-type/:username/:project/envvar/:name
+        """
+        endpoint = 'project/{0}/{1}/{2}/envvar/{3}'.format(
+            vcs_type,
+            username,
+            project,
+            name
+        )
+
+        resp = self._request('DELETE', endpoint)
+
+        return resp
+
     def _request(self, verb, endpoint, data=None):
         """Request a url.
 
