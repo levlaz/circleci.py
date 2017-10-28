@@ -5,12 +5,15 @@ Python Wrapper around the CircleCI API
 
 .. image:: https://circleci.com/gh/levlaz/circleci.py.svg?style=shield
     :target: https://circleci.com/gh/levlaz/circleci.py
+    :alt: CI Status
 
 .. image:: https://codecov.io/gh/levlaz/circleci.py/branch/master/graph/badge.svg
-  :target: https://codecov.io/gh/levlaz/circleci.py
+    :target: https://codecov.io/gh/levlaz/circleci.py
+    :alt: Code Coverage
 
 .. image:: https://badge.fury.io/py/circleci.svg
     :target: https://badge.fury.io/py/circleci
+    :alt: PyPi PAckage
 
 .. image:: https://readthedocs.org/projects/circlecipy/badge/?version=latest
     :target: http://circlecipy.readthedocs.io/en/latest/?badge=latest
