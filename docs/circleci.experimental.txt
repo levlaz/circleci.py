@@ -59,6 +59,15 @@ CLASSES
      |          token (str):
      |              Your CircleCI token.abs
      |  
+     |  add_heroku_key(self, apikey)
+     |      Adds your Heroku API key to CircleCI
+     |      
+     |      Args:
+     |          apikey: Heroku API Key
+     |      
+     |      Endpoint:
+     |          POST: /user/heroku-key
+     |  
      |  add_ssh_key(self, username, project, ssh_key, vcs_type='github', hostname=None)
      |      Create an ssh key
      |      

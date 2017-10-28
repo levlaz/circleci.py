@@ -503,6 +503,22 @@ class Api():
         resp = self._request('DELETE', endpoint)
         return resp
 
+    def add_heroku_key(self, apikey):
+        """Adds your Heroku API key to CircleCI
+
+        Args:
+            apikey: Heroku API Key
+
+        Endpoint:
+            POST: /user/heroku-key
+        """
+        params = {
+            "apikey": apikey
+        }
+
+        resp = self._request('POST', 'user/heroku-key', data=params)
+        return resp
+
     def _request(self, verb, endpoint, data=None):
         """Request a url.
 

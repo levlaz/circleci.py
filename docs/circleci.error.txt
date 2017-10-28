@@ -9,111 +9,34 @@ DESCRIPTION
 
 CLASSES
     builtins.Exception(builtins.BaseException)
-        CircleCIError
-            BadHttpVerbError
-            BadKeyTypeError
-            InvalidFilterException
+        CircleCIException
+            BadKeyError
+            BadVerbError
+            InvalidFilterError
     
-    class BadHttpVerbError(CircleCIError)
-     |  Exception raises for bad HTTP verb
-     |  
-     |  Args:
-     |      verb (str):
-     |          HTTP Verb that was tried
-     |      message (str):
-     |          explanation message
-     |  
-     |  Method resolution order:
-     |      BadHttpVerbError
-     |      CircleCIError
-     |      builtins.Exception
-     |      builtins.BaseException
-     |      builtins.object
-     |  
-     |  Methods defined here:
-     |  
-     |  __init__(self, verb, message)
-     |      Initialize self.  See help(type(self)) for accurate signature.
-     |  
-     |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from CircleCIError:
-     |  
-     |  __weakref__
-     |      list of weak references to the object (if defined)
-     |  
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from builtins.Exception:
-     |  
-     |  __new__(*args, **kwargs) from builtins.type
-     |      Create and return a new object.  See help(type) for accurate signature.
-     |  
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from builtins.BaseException:
-     |  
-     |  __delattr__(self, name, /)
-     |      Implement delattr(self, name).
-     |  
-     |  __getattribute__(self, name, /)
-     |      Return getattr(self, name).
-     |  
-     |  __reduce__(...)
-     |      helper for pickle
-     |  
-     |  __repr__(self, /)
-     |      Return repr(self).
-     |  
-     |  __setattr__(self, name, value, /)
-     |      Implement setattr(self, name, value).
-     |  
-     |  __setstate__(...)
-     |  
-     |  __str__(self, /)
-     |      Return str(self).
-     |  
-     |  with_traceback(...)
-     |      Exception.with_traceback(tb) --
-     |      set self.__traceback__ to tb and return self.
-     |  
-     |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from builtins.BaseException:
-     |  
-     |  __cause__
-     |      exception cause
-     |  
-     |  __context__
-     |      exception context
-     |  
-     |  __dict__
-     |  
-     |  __suppress_context__
-     |  
-     |  __traceback__
-     |  
-     |  args
-    
-    class BadKeyTypeError(CircleCIError)
+    class BadKeyError(CircleCIException)
      |  Exception raises for bad Key Type
      |  
-     |  Args:
-     |      key_type (str):
-     |          Value passed in for key_type
-     |      message (str):
-     |          explanation message
-     |  
      |  Method resolution order:
-     |      BadKeyTypeError
-     |      CircleCIError
+     |      BadKeyError
+     |      CircleCIException
      |      builtins.Exception
      |      builtins.BaseException
      |      builtins.object
      |  
      |  Methods defined here:
      |  
-     |  __init__(self, key_type, message)
+     |  __init__(self, argument)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |  
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from CircleCIError:
+     |  Methods inherited from CircleCIException:
+     |  
+     |  __str__(self)
+     |      Return str(self).
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from CircleCIException:
      |  
      |  __weakref__
      |      list of weak references to the object (if defined)
@@ -144,8 +67,79 @@ CLASSES
      |  
      |  __setstate__(...)
      |  
-     |  __str__(self, /)
+     |  with_traceback(...)
+     |      Exception.with_traceback(tb) --
+     |      set self.__traceback__ to tb and return self.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from builtins.BaseException:
+     |  
+     |  __cause__
+     |      exception cause
+     |  
+     |  __context__
+     |      exception context
+     |  
+     |  __dict__
+     |  
+     |  __suppress_context__
+     |  
+     |  __traceback__
+     |  
+     |  args
+    
+    class BadVerbError(CircleCIException)
+     |  Exception raises for bad HTTP verb
+     |  
+     |  Method resolution order:
+     |      BadVerbError
+     |      CircleCIException
+     |      builtins.Exception
+     |      builtins.BaseException
+     |      builtins.object
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, argument)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from CircleCIException:
+     |  
+     |  __str__(self)
      |      Return str(self).
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from CircleCIException:
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from builtins.Exception:
+     |  
+     |  __new__(*args, **kwargs) from builtins.type
+     |      Create and return a new object.  See help(type) for accurate signature.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from builtins.BaseException:
+     |  
+     |  __delattr__(self, name, /)
+     |      Implement delattr(self, name).
+     |  
+     |  __getattribute__(self, name, /)
+     |      Return getattr(self, name).
+     |  
+     |  __reduce__(...)
+     |      helper for pickle
+     |  
+     |  __repr__(self, /)
+     |      Return repr(self).
+     |  
+     |  __setattr__(self, name, value, /)
+     |      Implement setattr(self, name, value).
+     |  
+     |  __setstate__(...)
      |  
      |  with_traceback(...)
      |      Exception.with_traceback(tb) --
@@ -168,15 +162,28 @@ CLASSES
      |  
      |  args
     
-    class CircleCIError(builtins.Exception)
-     |  Base class for CircleCI errors
+    class CircleCIException(builtins.Exception)
+     |  Base class for CircleCI exceptions
+     |  
+     |  Args:
+     |      argument: The argument that was passed into the function.
+     |      message: explanation message.
      |  
      |  Method resolution order:
-     |      CircleCIError
+     |      CircleCIException
      |      builtins.Exception
      |      builtins.BaseException
      |      builtins.object
      |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, argument)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  __str__(self)
+     |      Return str(self).
+     |  
+     |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
      |  
      |  __weakref__
@@ -185,9 +192,6 @@ CLASSES
      |  ----------------------------------------------------------------------
      |  Methods inherited from builtins.Exception:
      |  
-     |  __init__(self, /, *args, **kwargs)
-     |      Initialize self.  See help(type(self)) for accurate signature.
-     |  
      |  __new__(*args, **kwargs) from builtins.type
      |      Create and return a new object.  See help(type) for accurate signature.
      |  
@@ -211,9 +215,6 @@ CLASSES
      |  
      |  __setstate__(...)
      |  
-     |  __str__(self, /)
-     |      Return str(self).
-     |  
      |  with_traceback(...)
      |      Exception.with_traceback(tb) --
      |      set self.__traceback__ to tb and return self.
@@ -235,29 +236,29 @@ CLASSES
      |  
      |  args
     
-    class InvalidFilterException(CircleCIError)
+    class InvalidFilterError(CircleCIException)
      |  Exception raises for an invalid filter
      |  
-     |  Args:
-     |      status_filter (str):
-     |          Value passed for invalid filter
-     |      message (str):
-     |          explanation message
-     |  
      |  Method resolution order:
-     |      InvalidFilterException
-     |      CircleCIError
+     |      InvalidFilterError
+     |      CircleCIException
      |      builtins.Exception
      |      builtins.BaseException
      |      builtins.object
      |  
      |  Methods defined here:
      |  
-     |  __init__(self, status_filter, message)
+     |  __init__(self, argument)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |  
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from CircleCIError:
+     |  Methods inherited from CircleCIException:
+     |  
+     |  __str__(self)
+     |      Return str(self).
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from CircleCIException:
      |  
      |  __weakref__
      |      list of weak references to the object (if defined)
@@ -287,9 +288,6 @@ CLASSES
      |      Implement setattr(self, name, value).
      |  
      |  __setstate__(...)
-     |  
-     |  __str__(self, /)
-     |      Return str(self).
      |  
      |  with_traceback(...)
      |      Exception.with_traceback(tb) --

@@ -81,3 +81,12 @@ rAUZ8tU0o5Ec6T0ZQkcous7OwBZGE+JLuFa3S6JfISLw42brjQ9dE5mosm7m2d4H
         resp = self.e.retry_no_cache('levlaz', 'circleci-sandbox', 1)
 
         self.assertTrue(resp['no_dependency_cache'])
+
+    def test_add_heroku_key(self):
+        key = os.getenv('HEROKU_KEY')
+
+        resp = self.c.add_heroku_key(key)
+
+        # there is no response when success, so we test to make sure
+        # that there is no other message as well.
+        self.assertTrue(len(resp) == 0)
