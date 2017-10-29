@@ -11,7 +11,7 @@ from setuptools import setup
 from setuptools.command.install import install
 
 # circleci.py version
-VERSION = "1.1.0"
+VERSION = "1.1.1"
 
 def readme():
     """print long description"""
@@ -42,7 +42,7 @@ setup(
     author_email="lev@levlaz.org",
     license="MIT",
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "Intended Audience :: System Administrators",
         "License :: OSI Approved :: MIT License",

@@ -3,6 +3,29 @@ Changelog
 
 Here you can see the full list of changes between each circleci.py release.
 
+Version 1.1.1
+-------------
+
+Released on October 29, 2017
+
+- 100% Code Coverage
+- Add Sphinx and upload docs to readthedocs.org
+- Create CD pipeline to pypi when using git tags
+
+- Implement additional API endpoints
+    - Add Heroku Key `#18 <https://github.com/levlaz/circleci.py/issues/18>`_
+    - Test Metadata `#17 <https://github.com/levlaz/circleci.py/issues/17>`_
+    - Update trigger build to handle optional build parameters `#12 <https://github.com/levlaz/circleci.py/issues/12>`_
+    - Get artifacts of latest build `#4 <https://github.com/levlaz/circleci.py/issues/4>`_
+    - Update retry build to include retry with SSH `#5 <https://github.com/levlaz/circleci.py/issues/5>`_
+    - Add ability to download artifacts `#3 <https://github.com/levlaz/circleci.py/issues/3>`_
+
+    - Work with Env Vars
+        - List `#13 <https://github.com/levlaz/circleci.py/issues/13>`_
+        - Add `#14 <https://github.com/levlaz/circleci.py/issues/14>`_
+        - Get `#15 <https://github.com/levlaz/circleci.py/issues/15>`_
+        - Delete `#16 <https://github.com/levlaz/circleci.py/issues/16>`_
+
 Version 1.1.0
 -------------
 
