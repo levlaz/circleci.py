@@ -286,8 +286,11 @@ class Api():
             username,
             project,
             branch='master',
-            vcs_type='github',
-            params=None):
+            revision=None,
+            tag=None,
+            parallel=None,
+            params=None,
+            vcs_type='github'):
         """
         Triggers a new build.
 
@@ -298,16 +301,34 @@ class Api():
                 case sensitive repo name
             branch (str):
                 defaults to master
-            vcs_type (str):
-                defaults to github
-                on circleci.com you can also pass in bitbucket
+            revision: specific revision to build
+                Default is null and the head of the branch is used.
+                Cannot be used with tag parameter.
+            tag: The tag to build.
+                Default is null.
+                Cannot be used with revision parameter.
+            parallel: The number of containers to use to run the build.
+                Default is null and the project default is used.
+                This parameter is ignored for builds running on our 2.0 infrastructure.
             params (dict):
                 optional build parameters
                 https://circleci.com/docs/1.0/parameterized-builds/
+            vcs_type (str):
+                defaults to github
+                on circleci.com you can also pass in bitbucket
 
         Endpoint:
             POST: /project/:vcs-type/:username/:project/tree/:branch
         """
+        data = {
+            'revision': revision,
+            'tag': tag,
+            'parallel': parallel,
+        }
+
+        if params:
+            data.update(params)
+
         endpoint = 'project/{0}/{1}/{2}/tree/{3}'.format(
             vcs_type,
             username,
@@ -315,7 +336,7 @@ class Api():
             branch
         )
 
-        resp = self._request('POST', endpoint, params)
+        resp = self._request('POST', endpoint, data=data)
         return resp
 
     def add_ssh_key(
