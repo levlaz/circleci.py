@@ -92,6 +92,11 @@ class TestCircleCIApi(unittest.TestCase):
 
         self.assertEqual(resp['reponame'], 'MOCK+testing')
 
+        # with SSH
+        resp = json.loads(self.c.retry_build('ccie-tester', 'testing', '1', ssh=True))
+
+        self.assertEqual(resp['reponame'], 'MOCK+testing')
+
     def test_cancel_build(self):
         self.loadMock('mock_cancel_build_response')
         resp = json.loads(self.c.cancel_build('ccie-tester', 'testing', '11'))
@@ -193,6 +198,12 @@ class TestCircleCIApi(unittest.TestCase):
         resp = json.loads(self.c.get_latest_artifact('levlaz', 'circleci-sandbox'))
 
         self.assertEqual(resp[0]['path'],'circleci-docs/index.html')
+
+        resp = json.loads(self.c.get_latest_artifact('levlaz', 'circleci-sandbox', 'master'))
+        self.assertEqual(resp[0]['path'],'circleci-docs/index.html')
+
+        with self.assertRaises(InvalidFilterError):
+            self.c.get_latest_artifact('levlaz', 'circleci-sandbox', 'master', 'invalid')
 
     # def test_helper(self):
     #     resp = self.c.get_latest_artifact('circleci', 'circleci-docs')

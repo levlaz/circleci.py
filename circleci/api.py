@@ -259,7 +259,7 @@ class Api():
         resp = self._request('GET', endpoint)
         return resp
 
-    def retry_build(self, username, project, build_num, vcs_type='github'):
+    def retry_build(self, username, project, build_num, ssh=False, vcs_type='github'):
         """Retries the build.
 
         Args:
@@ -269,6 +269,8 @@ class Api():
                 case sensitive repo name
             build_num (str):
                 build number
+            ssh: retry a build with SSH enabled
+                defaults to False
             vcs_type (str):
                 defaults to github
                 on circleci.com you can also pass in bitbucket
@@ -276,12 +278,20 @@ class Api():
         Endpoint:
             POST: /project/:vcs-type/:username/:project/:build_num/retry
         """
-        endpoint = 'project/{0}/{1}/{2}/{3}/retry'.format(
-            vcs_type,
-            username,
-            project,
-            build_num
-        )
+        if ssh:
+            endpoint = 'project/{0}/{1}/{2}/{3}/ssh'.format(
+                vcs_type,
+                username,
+                project,
+                build_num
+            )
+        else:
+            endpoint = 'project/{0}/{1}/{2}/{3}/retry'.format(
+                vcs_type,
+                username,
+                project,
+                build_num
+            )
         resp = self._request('POST', endpoint)
         return resp
 
