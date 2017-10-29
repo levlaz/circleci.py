@@ -18,19 +18,16 @@ class Experimental(Api):
     def retry_no_cache(self, username, project, build_num, vcs_type='github'):
         """Retries a build without cache
 
-        Args:
-            username (str):
-                org or user name
-            project (str):
-                case sensitive repo name
-            build_num (str):
-                build number
-            vcs_type (str):
-                defaults to github
-                on circleci.com you can also pass in bitbucket
+        :param username: Org or user name.
+        :param project: Case sensitive repo name.
+        :param build_num: Build number.
+        :param vcs_type: Defaults to github. On circleci.com you can \
+            also pass in ``bitbucket``.
+
+        :type build_num: int
 
         Endpoint:
-            POST: /project/:vcs-type/:username/:project/:build_num/retry
+            POST: ``/project/:vcs-type/:username/:project/:build_num/retry``
         """
         params = {
             "no-cache": "true",

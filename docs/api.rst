@@ -9,6 +9,7 @@ API Object
 
 .. automodule:: circleci.api
     :members:
+    :private-members:
 
 Experimental API Object
 -----------------------
@@ -20,5 +21,22 @@ Errors
 ------
 
 .. automodule:: circleci.error
+
+.. autoclass:: circleci.error.CircleCIException
     :members:
-    :inherited-members:
+
+.. autoclass:: circleci.error.BadVerbError
+    :members:
+
+    .. autoattribute:: message
+
+.. autoclass:: circleci.error.BadKeyError
+    :members:
+
+    .. autoattribute:: message
+
+.. autoclass:: circleci.error.InvalidFilterError
+    :members:
+
+    .. autoattribute:: filter_message
+    .. autoattribute:: artifacts_message
