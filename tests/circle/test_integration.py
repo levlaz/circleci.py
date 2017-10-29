@@ -90,3 +90,18 @@ rAUZ8tU0o5Ec6T0ZQkcous7OwBZGE+JLuFa3S6JfISLw42brjQ9dE5mosm7m2d4H
         # there is no response when success, so we test to make sure
         # that there is no other message as well.
         self.assertTrue(len(resp) == 0)
+
+    def test_download_artifact(self):
+        resp = self.c.get_artifacts('levlaz', 'circleci-demo-javascript-express', 59)
+
+        artifact = self.c.download_artifact(resp[0]['url'])
+
+        self.assertIn('base.css', artifact)
+
+        artifact_with_destdir = self.c.download_artifact(resp[0]['url'], '/tmp')
+
+        self.assertIn('tmp', artifact_with_destdir)
+
+        artifact_with_destdir_and_filename = self.c.download_artifact(resp[0]['url'], '/tmp', 'myartifact.txt')
+
+        self.assertIn('myartifact.txt', artifact_with_destdir_and_filename)

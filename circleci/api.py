@@ -5,6 +5,8 @@ CircleCI API Module
 :copyright: (c) 2017 by Lev Lazinskiy
 :license: MIT, see LICENSE for more details.
 """
+import os
+
 import requests
 from requests.auth import HTTPBasicAuth
 
@@ -257,6 +259,15 @@ class Api():
             )
 
         resp = self._request('GET', endpoint)
+        return resp
+
+    def download_artifact(self, url, destdir=None, filename=None):
+        """Download an artifact from a url
+
+        Args:
+            url: the URL to the artifact
+        """
+        resp = self._download(url, destdir, filename)
         return resp
 
     def retry_build(self, username, project, build_num, ssh=False, vcs_type='github'):
@@ -775,3 +786,32 @@ class Api():
         resp.raise_for_status()
 
         return resp.json()
+
+    def _download(self, url, destdir=None, filename=None):
+        """File download helper
+
+        Args:
+            url: url to the file
+            destdir: optional destination directory
+                defaults to current working directory
+            filename: optional file name
+                defaults to the name of the file from server
+        """
+        if not filename:
+            filename = url.split('/')[-1]
+
+        if not destdir:
+            destdir = os.getcwd()
+
+        endpoint = "{0}?circle-token={1}".format(url, self.token)
+
+        resp = requests.get(endpoint, stream=True)
+
+        path = "{0}/{1}".format(destdir, filename)
+
+        with open(path, 'wb') as f:
+            for chunk in resp.iter_content(chunk_size=1024):
+                if chunk:
+                    f.write(chunk)
+
+        return path
