@@ -37,7 +37,10 @@ class BadKeyError(CircleCIException):
 
 class InvalidFilterError(CircleCIException):
     """Exception raises for an invalid filter"""
-    def __init__(self, argument):
+    def __init__(self, argument, filter_type):
         super().__init__(argument)
-        self.message = "status_filter must be one of 'completed'" \
-            "'successful', 'failed', or 'running'"
+        if filter_type == 'status':
+            self.message = "status_filter must be one of 'completed'" \
+                "'successful', 'failed', or 'running'"
+        if filter_type == 'artifacts':
+            self.message = "must be one of 'completed', 'successful', or 'failed'"

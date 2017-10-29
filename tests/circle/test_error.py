@@ -10,7 +10,7 @@ class TestCircleCIError(unittest.TestCase):
         self.base = CircleCIException('fake')
         self.key = BadKeyError('fake')
         self.verb = BadVerbError('fake')
-        self.filter = InvalidFilterError('fake')
+        self.filter = InvalidFilterError('fake', 'status')
 
     def test_error_implements_str(self):
         self.assertTrue(self.base.__str__ is not object.__str__)
@@ -26,4 +26,5 @@ class TestCircleCIError(unittest.TestCase):
         self.assertIn('deploy-key', self.key.message)
 
     def test_filter_message(self):
+        print(self.filter)
         self.assertIn('running', self.filter.message)

@@ -102,13 +102,16 @@ class Api():
                 defaults to github
                 on circleci.com you can also pass in bitbucket
 
+        Raise:
+            InvalidFilterError
+
         Endpoint:
             GET: /project/:vcs-type/:username/:project
         """
         valid_filters = [None, 'completed', 'successful', 'failed', 'running']
 
         if status_filter not in valid_filters:
-            raise InvalidFilterError(status_filter)
+            raise InvalidFilterError(status_filter, 'status')
 
         if branch:
             endpoint = 'project/{0}/{1}/{2}/tree/{3}?limit={4}&offset={5}&filter={6}'.format(
@@ -199,6 +202,60 @@ class Api():
             project,
             build_num
         )
+        resp = self._request('GET', endpoint)
+        return resp
+
+    def get_latest_artifact(
+            self,
+            username,
+            project,
+            branch=None,
+            status_filter='completed',
+            vcs_type='github'):
+        """List the artifacts produced by the latest build on a given branch.
+
+        This endpoint is a little bit flakey. If the "latest" build does not have any artifacts,
+        rathern than returning an empty set, the API will 404.
+
+        Args:
+            username: org or user name
+            project: case sensitive repo name
+            branch: The branch you would like to look in for the latest build.
+                Returns artifacts for latest build in entire project if omitted.
+            filter: Restricts which builds are returned.
+                defaults to 'completed'
+                valid filters: "completed", "successful", "failed"
+            vcs_type: defaults to github
+                on circleci.com you can also pass in bitbucket
+
+        Raises:
+            InvalidFilterError
+
+        Endpoint:
+            GET: /project/:vcs-type/:username/:project/latest/artifacts
+        """
+        valid_filters = ['completed', 'successful', 'failed']
+
+        if status_filter not in valid_filters:
+            raise InvalidFilterError(status_filter, 'artifacts')
+
+        # passing None makes the API 404
+        if branch:
+            endpoint = 'project/{0}/{1}/{2}/latest/artifacts?branch={3}&filter={4}'.format(
+                vcs_type,
+                username,
+                project,
+                branch,
+                status_filter
+            )
+        else:
+            endpoint = 'project/{0}/{1}/{2}/latest/artifacts?filter={3}'.format(
+                vcs_type,
+                username,
+                project,
+                status_filter
+            )
+
         resp = self._request('GET', endpoint)
         return resp
 
@@ -681,6 +738,9 @@ class Api():
             params (dict):
                 optional build parameters
 
+        Raises:
+            requests.exceptions.HTTPError
+
         Returns:
             A JSON object with the response from the API
         """
@@ -695,13 +755,13 @@ class Api():
 
         if verb == 'GET':
             resp = requests.get(request_url, auth=auth, headers=headers)
-
         elif verb == 'POST':
             resp = requests.post(request_url, auth=auth, headers=headers, data=data)
         elif verb == 'DELETE':
             resp = requests.delete(request_url, auth=auth, headers=headers)
-
         else:
             raise BadVerbError(verb)
+
+        resp.raise_for_status()
 
         return resp.json()

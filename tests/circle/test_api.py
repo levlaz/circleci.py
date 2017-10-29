@@ -188,8 +188,14 @@ class TestCircleCIApi(unittest.TestCase):
 
         self.assertEqual(resp['message'], 'ok')
 
+    def test_get_latest_artifact(self):
+        self.loadMock('mock_get_latest_artifacts_response')
+        resp = json.loads(self.c.get_latest_artifact('levlaz', 'circleci-sandbox'))
+
+        self.assertEqual(resp[0]['path'],'circleci-docs/index.html')
+
     # def test_helper(self):
-    #     resp = self.c.delete_envvar('levlaz', 'circleci-sandbox', 'foo')
+    #     resp = self.c.get_latest_artifact('circleci', 'circleci-docs')
     #     print(resp)
-    #     with open('tests/mocks/mock_delete_envvar_response', 'w') as f:
+    #     with open('tests/mocks/mock_get_latest_artifacts_response', 'w') as f:
     #          json.dump(resp, f)
