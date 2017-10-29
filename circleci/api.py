@@ -216,22 +216,20 @@ class Api():
             vcs_type='github'):
         """List the artifacts produced by the latest build on a given branch.
 
-        This endpoint is a little bit flakey. If the "latest" build does not have any artifacts,
-        rathern than returning an empty set, the API will 404.
+        .. note::
+            This endpoint is a little bit flakey. If the "latest" build does not have any artifacts, rathern than returning an empty set, the API will 404.
 
-        Args:
-            username: org or user name
-            project: case sensitive repo name
-            branch: The branch you would like to look in for the latest build.
+        :param username: org or user name
+        :param project: case sensitive repo name
+        :param branch: The branch you would like to look in for the latest build.
                 Returns artifacts for latest build in entire project if omitted.
-            filter: Restricts which builds are returned.
+        :param filter: Restricts which builds are returned.
                 defaults to 'completed'
                 valid filters: "completed", "successful", "failed"
-            vcs_type: defaults to github
+        :param vcs_type: defaults to github
                 on circleci.com you can also pass in bitbucket
 
-        Raises:
-            InvalidFilterError
+        :raises InvalidFilterError: when filter is not a valid filter.
 
         Endpoint:
             GET: /project/:vcs-type/:username/:project/latest/artifacts
@@ -372,28 +370,26 @@ class Api():
         """
         Triggers a new build.
 
-        Args:
-            username (str):
-                org or user name
-            project (str):
-                case sensitive repo name
-            branch (str):
-                defaults to master
-            revision: specific revision to build
-                Default is null and the head of the branch is used.
-                Cannot be used with tag parameter.
-            tag: The tag to build.
-                Default is null.
-                Cannot be used with revision parameter.
-            parallel: The number of containers to use to run the build.
+        .. note::
+            * ``tag`` and ``revision`` are mutually exclusive.
+            * ``parallel`` is ignored for builds running on CircleCI 2.0
+
+        :param username: Organization or user name.
+        :param project: Case sensitive repo name.
+        :param branch: The branch to build.
+            Defaults to master.
+        :param revision: The specific git revision to build.
+            Default is null and the head of the branch is used.
+            Can not be used with the tag parameter.
+        :param tag: The git tag to build.
+            Default is null.
+            Cannot be used with the tag parameter.
+        :param parallel: The number of containers to use to run the build.
                 Default is null and the project default is used.
-                This parameter is ignored for builds running on our 2.0 infrastructure.
-            params (dict):
-                optional build parameters
-                https://circleci.com/docs/1.0/parameterized-builds/
-            vcs_type (str):
-                defaults to github
-                on circleci.com you can also pass in bitbucket
+        :param params: Optional build parameters.
+        :param vcs_type: Defaults to ``github``.
+            On circleci.com you can also pass in ``bitbucket``.
+        :type params: dict
 
         Endpoint:
             POST: /project/:vcs-type/:username/:project/tree/:branch

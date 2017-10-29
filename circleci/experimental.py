@@ -2,7 +2,7 @@
 """
 CircleCI Experimental API Module
 
-.. admonition:: Notice
+.. warning::
 
     All methods here work against **undocumented** and **unsupported** aspects of the
     CircleCI API. Subject to change at any moment. Use at your own risk.
