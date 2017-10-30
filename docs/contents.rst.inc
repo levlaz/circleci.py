@@ -25,7 +25,10 @@ method, this part of the documentation is for you.
 Developer Documentation
 -----------------------
 
-Coming soon.
+.. toctree::
+    :maxdepth: 2
+
+    dev 
 
 Changelog
 ---------
