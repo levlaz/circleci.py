@@ -1,4 +1,4 @@
-.PHONY: help dev docs package test
+.PHONY: help clean dev docs package test
 
 help:
 	@echo "This project assumes that an active Python virtualenv is present."
