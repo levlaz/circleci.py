@@ -31,6 +31,12 @@ jobs:
       - store_artifacts:
           path: htmlcov/
 
+  integration:
+    docker:
+      - image: circleci/python:3.6
+    steps:
+      - run: echo "It works!"
+
   deploy:
     docker:
       - image: circleci/python:3.6
