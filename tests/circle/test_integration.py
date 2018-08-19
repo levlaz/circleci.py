@@ -17,12 +17,12 @@ class TestCircleCIApi(unittest.TestCase):
 
     def test_trigger_with_build_params(self):
         params = {
-            "build_parameters[CIRCLE_JOB]": "test"
+            "build_parameters[CIRCLE_JOB]": "build"
         }
 
-        resp = self.c.trigger_build('levlaz', 'circleci-demo-javascript-express', params=params)
+        resp = self.c.trigger_build('levlaz', 'circleci.py', params=params)
 
-        self.assertEqual(resp['build_parameters']['CIRCLE_JOB'], 'test')
+        self.assertEqual(resp['build_parameters']['CIRCLE_JOB'], 'build')
 
     def test_add_ssh_key(self):
 
@@ -92,11 +92,11 @@ rAUZ8tU0o5Ec6T0ZQkcous7OwBZGE+JLuFa3S6JfISLw42brjQ9dE5mosm7m2d4H
         self.assertTrue(len(resp) == 0)
 
     def test_download_artifact(self):
-        resp = self.c.get_artifacts('levlaz', 'circleci-demo-javascript-express', 59)
+        resp = self.c.get_artifacts('levlaz', 'circleci.py', 87)
 
         artifact = self.c.download_artifact(resp[0]['url'])
 
-        self.assertIn('base.css', artifact)
+        self.assertIn('circleci_api_py.html', artifact)
 
         artifact_with_destdir = self.c.download_artifact(resp[0]['url'], '/tmp')
 
