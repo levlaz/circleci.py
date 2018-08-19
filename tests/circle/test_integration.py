@@ -92,11 +92,11 @@ rAUZ8tU0o5Ec6T0ZQkcous7OwBZGE+JLuFa3S6JfISLw42brjQ9dE5mosm7m2d4H
         self.assertTrue(len(resp) == 0)
 
     def test_download_artifact(self):
-        resp = self.c.get_artifacts('levlaz', 'ccircleci.py', 87)
+        resp = self.c.get_artifacts('levlaz', 'circleci-demo-javascript-express', 59)
 
         artifact = self.c.download_artifact(resp[0]['url'])
 
-        self.assertIn('style.css', artifact)
+        self.assertIn('base.css', artifact)
 
         artifact_with_destdir = self.c.download_artifact(resp[0]['url'], '/tmp')
 
