@@ -3,6 +3,13 @@ Changelog
 
 Here you can see the full list of changes between each circleci.py release.
 
+Version 1.1.2 
+-------------
+
+Released on August 29, 2018
+
+- Minor patch release, which unpins the request library. Thanks to @r1b for the contribution. 
+
 Version 1.1.1
 -------------
 
