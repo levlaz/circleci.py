@@ -67,7 +67,7 @@ License
 
 MIT
 
-Author
-======
+Original Author
+===============
 
 Lev Lazinskiy - `https://levlaz.org <https://levlaz.org>`_
