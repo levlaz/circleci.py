@@ -56,3 +56,18 @@ Import the CircleCI API and start using methods:
 
 * You can read the `general documentation <https://circlecipy.readthedocs.io/en/latest/?badge=latest>`_ for more information about using circleci.py.
 * If you are interesting in hacking on this library, check out the `developer documentation <https://circlecipy.readthedocs.io/en/latest/dev.html>`_. 
+
+Contributing
+============
+
+Please create an issue with a description of your problem, or open a pull request with a fix. 
+
+License
+=======
+
+MIT
+
+Author
+======
+
+Lev Lazinskiy - [https://levlaz.org](https://levlaz.org)
