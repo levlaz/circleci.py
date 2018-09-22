@@ -672,7 +672,7 @@ class Api():
         """Request a url.
 
         :param endpoint: The api endpoint we want to call.
-        :param veb: POST, GET, or DELETE.
+        :param verb: POST, GET, or DELETE.
         :param params: Optional build parameters.
 
         :type params: dict
