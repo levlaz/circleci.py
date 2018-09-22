@@ -70,4 +70,4 @@ MIT
 Author
 ======
 
-Lev Lazinskiy - [https://levlaz.org](https://levlaz.org)
+Lev Lazinskiy - `https://levlaz.org <https://levlaz.org>`_
