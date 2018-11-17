@@ -1,178 +1,90 @@
-version: 2
+version: 2.1
+workflows:
+  build_and_deploy:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
+      - test-python-install:
+          version: "3.4"
+          requires:
+            - build
+      - test-python-install:
+          version: "3.5"
+          requires:
+            - build
+      - test-python-install:
+          version: "3.6"
+          requires:
+            - build
+      - test-python-install:
+          version: "3.7"
+          requires:
+            - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /[0-9]+(\.[0-9]+)*/
+            branches:
+              ignore: /.*/
 jobs:
   build:
     docker:
       - image: circleci/python:3.6
     steps:
       - checkout
-
       - restore_cache:
           key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
-
       - run:
           name: install python dependencies
           command: |
             python3 -m venv venv
             . venv/bin/activate
             make dev
-
       - save_cache:
           key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
           paths:
             - "venv"
-
       - run:
           name: run tests
           command: |
             . venv/bin/activate
             make test
             codecov
-
       - store_artifacts:
           path: htmlcov/
-
-  test34:
+  test-python-install:
+    parameters:
+      version:
+        type: string
+        default: latest
     docker:
-      - image: circleci/python:3.4
+      - image: circleci/python:<< parameters.version >>
     steps:
       - checkout
-
       - restore_cache:
           key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
-
       - run:
           name: install python dependencies
           command: |
             python3 -m venv venv
             . venv/bin/activate
             make dev
-
       - save_cache:
           key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
           paths:
             - "venv"
-
       - run:
           name: run tests
           command: |
             . venv/bin/activate
             make test
             codecov
-
       - store_artifacts:
           path: htmlcov/
-      
-      - run:
-          name: Smoke Test Install 
-          command: |
-            python --version
-            sudo pip3 install circleci
-
-  test35:
-    docker:
-      - image: circleci/python:3.5
-    steps:
-      - checkout
-
-      - restore_cache:
-          key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
-
-      - run:
-          name: install python dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            make dev
-
-      - save_cache:
-          key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
-          paths:
-            - "venv"
-
-      - run:
-          name: run tests
-          command: |
-            . venv/bin/activate
-            make test
-            codecov
-
-      - store_artifacts:
-          path: htmlcov/
-      
-      - run:
-          name: Smoke Test Install 
-          command: |
-            python --version
-            sudo pip3 install circleci
-
-  test36:
-    docker:
-      - image: circleci/python:3.6
-    steps:
-      - checkout
-
-      - restore_cache:
-          key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
-
-      - run:
-          name: install python dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            make dev
-
-      - save_cache:
-          key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
-          paths:
-            - "venv"
-
-      - run:
-          name: run tests
-          command: |
-            . venv/bin/activate
-            make test
-            codecov
-
-      - store_artifacts:
-          path: htmlcov/
-      
-      - run:
-          name: Smoke Test Install 
-          command: |
-            python --version
-            sudo pip3 install circleci
-
-  test37:
-    docker:
-      - image: circleci/python:3.7
-    steps:
-      - checkout
-
-      - restore_cache:
-          key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
-
-      - run:
-          name: install python dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            make dev
-
-      - save_cache:
-          key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
-          paths:
-            - "venv"
-
-      - run:
-          name: run tests
-          command: |
-            . venv/bin/activate
-            make test
-            codecov
-
-      - store_artifacts:
-          path: htmlcov/
-      
       - run:
           name: Smoke Test Install 
           command: |
@@ -184,35 +96,29 @@ jobs:
       - image: circleci/python:3.6
     steps:
       - run: echo "It works!"
-
   deploy:
     docker:
       - image: circleci/python:3.6
     steps:
       - checkout
-
       - restore_cache:
           key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
-
       - run:
           name: install python dependencies
           command: |
             python3 -m venv venv
             . venv/bin/activate
             make dev
-
       - save_cache:
           key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
           paths:
             - "venv"
-
       - run:
           name: verify git tag vs. version
           command: |
             python3 -m venv venv
             . venv/bin/activate
             python setup.py verify
-
       - run:
           name: init .pypirc
           command: |
@@ -224,38 +130,8 @@ jobs:
           name: create packages
           command: |
             make package
-
       - run:
           name: upload to pypi
           command: |
             . venv/bin/activate
             twine upload dist/*
-
-workflows:
-  version: 2
-  build_and_deploy:
-    jobs:
-      - build:
-          filters:
-            tags:
-              only: /.*/
-      - test34:
-          requires:
-            - build
-      - test35:
-          requires:
-            - build
-      - test36:
-          requires:
-            - build
-      - test37:
-          requires:
-            - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /[0-9]+(\.[0-9]+)*/
-            branches:
-              ignore: /.*/
