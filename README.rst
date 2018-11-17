@@ -62,7 +62,7 @@ Real World Examples
 
 Here are a couple of real world examples of this library being used. If you want to add your example here, open up a PR. 
 
-* `Lambda Function to Deploy via CircleCI<https://github.com/launchdarkly/SupportService/blob/master/LdLambda.py>`_ -- in this example the library is used to trigger deployment jobs in response to a webhook that triggers an AWS Lambda Job via AWS API Gateway. 
+* `Lambda Function to Deploy via CircleCI <https://github.com/launchdarkly/SupportService/blob/master/LdLambda.py>`_ -- in this example the library is used to trigger deployment jobs in response to a webhook that triggers an AWS Lambda Job via AWS API Gateway. 
 
 Contributing
 ============
