@@ -23,7 +23,12 @@ class TestCircleCIApi(unittest.TestCase):
             }
         }
 
-        resp = self.c.trigger_build('levlaz', 'circleci.py', params=params)
+        resp = self.c.trigger_build(
+            'levlaz',
+            'circleci.py',
+            branch='tmp_integration_test',
+            params=params)
+
         self.assertEqual(resp['build_parameters']['CIRCLE_JOB'], 'integration')
         self.assertEqual(resp['build_parameters']['RUN_EXTRA_TESTS'], 'true')
 

@@ -19,6 +19,11 @@ Python Wrapper around the CircleCI API
     :target: http://circlecipy.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
+Warnings
+========
+
+* circleci.py does not yet fully support CircleCI 2.1 or the Workflows API
+
 Features
 ========
 
@@ -48,26 +53,26 @@ Import the CircleCI API and start using methods:
 
     circleci = Api("$YOUR_TOKEN")
 
-    # get info about your user 
+    # get info about your user
     circleci.get_user_info()
 
     # get list of all of your projects
     circleci.get_projects()
 
 * You can read the `general documentation <https://circlecipy.readthedocs.io/en/latest/?badge=latest>`_ for more information about using circleci.py.
-* If you are interesting in hacking on this library, check out the `developer documentation <https://circlecipy.readthedocs.io/en/latest/dev.html>`_. 
+* If you are interesting in hacking on this library, check out the `developer documentation <https://circlecipy.readthedocs.io/en/latest/dev.html>`_.
 
 Real World Examples
 ===================
 
-Here are a couple of real world examples of this library being used. If you want to add your example here, open up a PR. 
+Here are a couple of real world examples of this library being used. If you want to add your example here, open up a PR.
 
-* `Lambda Function to Deploy via CircleCI <https://github.com/launchdarkly/SupportService/blob/master/LdLambda.py>`_ -- in this example the library is used to trigger deployment jobs in response to a webhook that triggers an AWS Lambda Job via AWS API Gateway. 
+* `Lambda Function to Deploy via CircleCI <https://github.com/launchdarkly/SupportService/blob/master/LdLambda.py>`_ -- in this example the library is used to trigger deployment jobs in response to a webhook that triggers an AWS Lambda Job via AWS API Gateway.
 
 Contributing
 ============
 
-Please create an issue with a description of your problem, or open a pull request with a fix. 
+Please create an issue with a description of your problem, or open a pull request with a fix.
 
 License
 =======

@@ -3,6 +3,15 @@ Changelog
 
 Here you can see the full list of changes between each circleci.py release.
 
+Version 1.1.3
+-------------
+
+Released on November 19, 2018 
+
+- Fix a bug where triggering a build with parameters was not working. Thanks to @hush-hush for the contribution. 
+- Update CI configuration for CircleCI 2.1. Thanks to @felicianotech for the contribution. 
+- Added smoke tests to test out all supported versions of Python3. 
+
 Version 1.1.2 
 -------------
 
