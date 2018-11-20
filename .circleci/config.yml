@@ -90,12 +90,12 @@ jobs:
           command: |
             python --version
             sudo pip3 install circleci
-
   integration:
     docker:
       - image: circleci/python:3.6
     steps:
       - run: echo "It works!"
+      - run: echo $RUN_EXTRA_TESTS
   deploy:
     docker:
       - image: circleci/python:3.6
@@ -125,7 +125,6 @@ jobs:
             echo -e "[pypi]" >> ~/.pypirc
             echo -e "username = levlaz" >> ~/.pypirc
             echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
-
       - run:
           name: create packages
           command: |

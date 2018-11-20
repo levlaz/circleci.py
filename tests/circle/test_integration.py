@@ -17,12 +17,15 @@ class TestCircleCIApi(unittest.TestCase):
 
     def test_trigger_with_build_params(self):
         params = {
-            "build_parameters[CIRCLE_JOB]": "integration"
+            "build_parameters": {
+                "CIRCLE_JOB": "integration",
+                "RUN_EXTRA_TESTS": "true"
+            }
         }
 
         resp = self.c.trigger_build('levlaz', 'circleci.py', params=params)
-
         self.assertEqual(resp['build_parameters']['CIRCLE_JOB'], 'integration')
+        self.assertEqual(resp['build_parameters']['RUN_EXTRA_TESTS'], 'true')
 
     def test_add_ssh_key(self):
 
