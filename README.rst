@@ -1,7 +1,7 @@
 circleci.py
 ===========
 
-Python Wrapper around the CircleCI API
+Python Wrapper and SDK around the CircleCI API
 
 .. image:: https://circleci.com/gh/levlaz/circleci.py.svg?style=shield
     :target: https://circleci.com/gh/levlaz/circleci.py

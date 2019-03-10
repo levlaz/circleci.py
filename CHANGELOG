@@ -3,21 +3,32 @@ Changelog
 
 Here you can see the full list of changes between each circleci.py release.
 
+Version 1.2.0
+-------------
+
+Released on March 10, 2019
+
+- Add SDK module which allows folks to do intersting or complicated things
+  using the API.
+- Add demo modules which shows some sample usage of the API and SDK.
+- Add version module which provides some helpers to get the correct version
+  of circleci.py in various places.
+
 Version 1.1.3
 -------------
 
-Released on November 19, 2018 
+Released on November 19, 2018
 
-- Fix a bug where triggering a build with parameters was not working. Thanks to @hush-hush for the contribution. 
-- Update CI configuration for CircleCI 2.1. Thanks to @felicianotech for the contribution. 
-- Added smoke tests to test out all supported versions of Python3. 
+- Fix a bug where triggering a build with parameters was not working. Thanks to @hush-hush for the contribution.
+- Update CI configuration for CircleCI 2.1. Thanks to @felicianotech for the contribution.
+- Added smoke tests to test out all supported versions of Python3.
 
-Version 1.1.2 
+Version 1.1.2
 -------------
 
 Released on August 29, 2018
 
-- Minor patch release, which unpins the request library. Thanks to @r1b for the contribution. 
+- Minor patch release, which unpins the request library. Thanks to @r1b for the contribution.
 
 Version 1.1.1
 -------------
