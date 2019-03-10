@@ -3,21 +3,21 @@ Changelog
 
 Here you can see the full list of changes between each circleci.py release.
 
-Version 1.2.1
+Version 1.2.2
 -------------
 
-Relesed on March 10, 2019
+.. note::
+    What happened to 1.2.0 and 1.2.1?
 
-- Fix bug in SDK where current running build was counted, therefore creating
-  an infinite loop.
+    Due to a bug in the SDK, these releases has been unpublished from pypi. The
+    bug was an issue in the build_singleton logic that did not exclude the
+    current build, therefore putting us into an infinite loop. Ironically, I
+    did not test this on CircleCI so this is why the bug was not found in
+    testing. Since pypi does not allow re-publishing versions (for good reason)
+    I had to unpublish 1.2.0 and 1.2.1
 
-Version 1.2.0
--------------
-
-.. warning::
-    Due to a bug in the SDK, this release has been unpublished from pypi. If
-    you absolutely need this version of the library, you can get it from the
-    github releases page. All users are advised to upgrade to version 1.2.1.
+    In the future, I may start to use the -dev publishing model to try to verify
+    this behavior ahead of time.
 
 Released on March 10, 2019
 

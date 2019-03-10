@@ -64,7 +64,8 @@ class SDK():
 
 
     def build_singleton(self, username, project, vcs_type='github'):
-        """Force builds for a specific project to run one at a time.
+        """
+        Force builds for a specific project to run one at a time.
 
         This method gets a build summary for a specific project to see
         all currently running builds. It filters out the current running
@@ -78,22 +79,32 @@ class SDK():
         :param vcs_type: Defaults to github. On circleci.com you can \
             also pass in ``bitbucket``.
 
-        .. versionchanged:: 1.2.1
-            fixed bug where current build would be counted as a running build
-            therefore putting us into an infinite loop.
+        .. versionchanged:: 1.2.2
+            fixed bug where current build was counted toward running builds.
         """
         _SLEEP_INTERVAL_SECONDS = 15
 
-        rb = self._get_running_builds(username, project, vcs_type)
-        # remove current running build from the list of running builds.
-        # CIRCLE_BUILD_URL is set by default in all CircleCI builds.
-        rb.remove(os.environ.get('CIRCLE_BUILD_URL'))
+        def _get_other_builds():
+            """
+            Get running builds except for this one.
 
-        while len(rb) > 0:
+            CIRCLE_BUILD_URL is set by default in all CircleCI builds.
+            """
+            error_msg = ("CIRCLE_BUILD_URL was not found. You may be "
+                "running this script outside of a CircleCI build.")
+
+            rb = self._get_running_builds(username, project, vcs_type)
+            try:
+                rb.remove(os.environ.get('CIRCLE_BUILD_URL'))
+            except ValueError:
+                self._log(error_msg)
+            if len(rb) > 0:
+                self._log(rb)
+            return rb
+
+        while len(_get_other_builds()) > 0:
             self._log('found running builds, sleeping for {0} seconds. \
                 '.format(_SLEEP_INTERVAL_SECONDS))
-            self._log(rb)
             time.sleep(_SLEEP_INTERVAL_SECONDS)
-            rb = self._get_running_builds(username, project, vcs_type)
 
         self._log('no running builds found, beginning execution.')
