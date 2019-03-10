@@ -37,7 +37,7 @@ directory called ``scripts`` in your code repository.
         - run:
             name: Build Singleton
             command: |
-                sudo pip install circleci.py
+                sudo pip install circleci
                 python scripts/build_singleton.py
 
 If builds are running you will see the following output in CircleCI:
