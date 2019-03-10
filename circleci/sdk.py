@@ -8,6 +8,7 @@ CircleCI SDK Module
 :license: MIT, see LICENSE for more details.
 """
 import time
+import os
 
 from circleci.api import Api
 
@@ -66,8 +67,9 @@ class SDK():
         """Force builds for a specific project to run one at a time.
 
         This method gets a build summary for a specific project to see
-        all currently running builds. It pauses execution until the project
-        has no more running builds.
+        all currently running builds. It filters out the current running
+        build. It pauses execution until the project has no more running
+        builds.
 
         It will recheck for running builds every 15 seconds.
 
@@ -75,10 +77,17 @@ class SDK():
         :param project: Case sensitive repo name.
         :param vcs_type: Defaults to github. On circleci.com you can \
             also pass in ``bitbucket``.
+
+        .. versionchanged:: 1.2.1
+            fixed bug where current build would be counted as a running build
+            therefore putting us into an infinite loop.
         """
         _SLEEP_INTERVAL_SECONDS = 15
 
         rb = self._get_running_builds(username, project, vcs_type)
+        # remove current running build from the list of running builds.
+        # CIRCLE_BUILD_URL is set by default in all CircleCI builds.
+        rb.remove(os.environ.get('CIRCLE_BUILD_URL'))
 
         while len(rb) > 0:
             self._log('found running builds, sleeping for {0} seconds. \

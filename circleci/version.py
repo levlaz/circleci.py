@@ -6,7 +6,7 @@ Helper file to set version in various places.
 
 .. versionadded:: 1.2.0
 """
-VERSION = "1.2.0"
+VERSION = "1.2.1"
 """Current version of circleci.py."""
 
 def get_short_version() -> str:

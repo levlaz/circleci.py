@@ -3,6 +3,14 @@ Changelog
 
 Here you can see the full list of changes between each circleci.py release.
 
+Version 1.2.1
+-------------
+
+Relesed on March 10, 2019
+
+- Fix bug in SDK where current running build was counted, therefore creating
+  an infinite loop.
+
 Version 1.2.0
 -------------
 
