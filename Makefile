@@ -11,13 +11,7 @@ clean:
 	rm -rf dist/*
 
 dev:
-	pip install coverage
-	pip install codecov
-	pip install pylint
-	pip install twine
-	pip install sphinx
-	pip install sphinx-autobuild
-	pip install sphinx_rtd_theme
+	pip install -r dev-requirements.txt
 	pip install -e .
 
 docs:

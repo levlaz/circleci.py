@@ -12,11 +12,10 @@ class TestCircleCIError(unittest.TestCase):
         self.verb = BadVerbError('fake')
         self.filter = InvalidFilterError('fake', 'status')
         self.afilter = InvalidFilterError('fake', 'artifacts')
+
     def test_error_implements_str(self):
         self.assertTrue(self.base.__str__ is not object.__str__)
-
         string = self.base.__str__()
-
         self.assertIn('invalid', string)
 
     def test_verb_message(self):
@@ -27,5 +26,4 @@ class TestCircleCIError(unittest.TestCase):
 
     def test_filter_message(self):
         self.assertIn('running', self.filter.message)
-
         self.assertIn('completed', self.afilter.message)

@@ -3,6 +3,33 @@ Changelog
 
 Here you can see the full list of changes between each circleci.py release.
 
+Version 2.0.0
+-------------
+
+.. warning::
+    This release deprecates all 1.0 endpoints. If you need to continue to
+    use some of the 1.0 endpoints (i.e. you are running CircleCI server and
+    still have some 1.0 builders) then you should pin yourself to the 1.x
+    release.
+
+Released on $DATE
+
+- Split off the SDK into it's own repo. It can now be found
+  `here <https://github.com/levlaz/circleci_sdk>`_. This decision was made
+  to reduce the complexity of this library, and decouple the development of
+  the mature API wrapper from the very early stage SDK.
+- Remove 1.0 features. This API wrapper no longer works with any of the
+  legacy 1.0 endpoints. The specific methods that have been removed are shown
+  below:
+
+  - The Experimental module which implemented a method to retry
+    a build without cache.
+  - The clear_cache() method, Caches in 2.0 are immutable.
+  - The add_heroku_key() method. Heroku is no longer auto configured in
+    CircleCI 2.0+; this means you need to use environment variables for
+    this type of configuration.
+
+
 Version 1.2.2
 -------------
 
@@ -32,8 +59,10 @@ Version 1.1.3
 
 Released on November 19, 2018
 
-- Fix a bug where triggering a build with parameters was not working. Thanks to @hush-hush for the contribution.
-- Update CI configuration for CircleCI 2.1. Thanks to @felicianotech for the contribution.
+- Fix a bug where triggering a build with parameters was not working.
+  Thanks to @hush-hush for the contribution.
+- Update CI configuration for CircleCI 2.1.
+  Thanks to @felicianotech for the contribution.
 - Added smoke tests to test out all supported versions of Python3.
 
 Version 1.1.2
@@ -72,7 +101,6 @@ Version 1.1.0
 Released on October 25, 2017
 
 - Basic project tooling put into place.
-
     - Continuous Integration with CircleCI
     - Packaging and uploading to PyPI
     - Code Coverage

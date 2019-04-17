@@ -11,12 +11,6 @@ API Object
     :members:
     :private-members:
 
-Experimental API Object
------------------------
-
-.. automodule:: circleci.experimental
-    :members:
-
 
 Errors
 ------

@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-CircleCI API Error Module
+circleci.error
+~~~~~~~~~~~~~~
 
-:copyright: (c) 2017 by Lev Lazinskiy
-:license: MIT, see LICENSE for more details
+    This module provides some classes that subclass Exception to provide
+    some useful exceptions for the API wrapper.
 """
+
+
 class CircleCIException(Exception):
     """Base class for CircleCI exceptions
 
@@ -37,6 +40,7 @@ class BadKeyError(CircleCIException):
     :param argument: The argument that was passed into the function.
     """
     message = "key must be one of 'deploy-key' or 'github-user-key'"
+
     def __init__(self, argument):
         super().__init__(argument)
         self.message = BadKeyError.message

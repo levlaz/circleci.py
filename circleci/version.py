@@ -1,15 +1,15 @@
 """
 circleci.version
-~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
 
-Helper file to set version in various places.
+    This module provides some helper functions to set version in various places.
 
-.. versionadded:: 1.2.0
+    .. versionadded:: 1.2.0
 """
-VERSION = "1.2.2"
+VERSION = "2.0.0"
 """Current version of circleci.py."""
 
-def get_short_version() -> str:
+def get_short_version():
     """
     Format "short" version in the form of X.Y
 

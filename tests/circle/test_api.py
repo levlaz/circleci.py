@@ -153,12 +153,6 @@ class TestCircleCIApi(unittest.TestCase):
 
         self.assertEqual(resp['message'], 'ok')
 
-    def test_clear_cache(self):
-        self.loadMock('mock_clear_cache_response')
-        resp = json.loads(self.c.clear_cache('levlaz', 'circleci-sandbox'))
-
-        self.assertEqual('build dependency caches deleted', resp['status'])
-
     def test_get_test_metadata(self):
         self.loadMock('mock_get_test_metadata_response')
         resp = json.loads(self.c.get_test_metadata('levlaz', 'circleci-demo-javascript-express', 127))

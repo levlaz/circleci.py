@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-CircleCI API Module
+circleci.api
+~~~~~~~~~~~~
 
-:copyright: (c) 2017 by Lev Lazinskiy
-:license: MIT, see LICENSE for more details.
+    This module provides a class which abstracts the CircleCI REST API.
+
+    .. versionchanged:: 2.0.0
+       Removed legacy 1.0 endpoints. See CHANGELOG for more details.
 """
 import os
 
@@ -20,7 +23,8 @@ class Api():
         """Instantiate a new circleci.Api object.
 
         :param url: The URL to the CircleCI instance. Defaults to \
-            https://circleci.com/api/v1.1. If you are running CircleCI server, \ the API is available at the same endpoint of your own \
+            https://circleci.com/api/v1.1. If you are running CircleCI server, \
+            the API is available at the same endpoint of your own \
             installation url. i.e (https://circleci.yourcompany.com/api/v1.1).
         :param token: Your CircleCI API token.
         """
@@ -196,7 +200,9 @@ class Api():
         """List the artifacts produced by the latest build on a given branch.
 
         .. note::
-            This endpoint is a little bit flakey. If the "latest" build does not have any artifacts, rathern than returning an empty set, the API will 404.
+            This endpoint is a little bit flakey. If the "latest" \
+                build does not have any artifacts, rathern than returning \
+                an empty set, the API will 404.
 
         :param username: org or user name
         :param project: case sensitive repo name
@@ -517,40 +523,6 @@ class Api():
         )
 
         resp = self._request('DELETE', endpoint)
-        return resp
-
-    def clear_cache(self, username, project, vcs_type='github'):
-        """Clear cache for a project
-
-        :param username: Org or user name.
-        :param project: Case sensitive repo name.
-        :param vcs_type: Defaults to github. On circleci.com you can \
-            also pass in ``bitbucket``.
-
-        Endpoint:
-            DELETE: ``/project/:vcs-type/:username/:project/build-cache``
-        """
-        endpoint = 'project/{0}/{1}/{2}/build-cache'.format(
-            vcs_type,
-            username,
-            project
-        )
-        resp = self._request('DELETE', endpoint)
-        return resp
-
-    def add_heroku_key(self, apikey):
-        """Adds your Heroku API key to CircleCI
-
-        :param apikey: Heroku API key.
-
-        Endpoint:
-            POST: ``/user/heroku-key``
-        """
-        params = {
-            "apikey": apikey
-        }
-
-        resp = self._request('POST', 'user/heroku-key', data=params)
         return resp
 
     def get_test_metadata(self, username, project, build_num, vcs_type='github'):

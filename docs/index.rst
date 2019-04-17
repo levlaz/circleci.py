@@ -6,6 +6,10 @@
 Welcome to circleci.py
 ======================
 
-circleci.py is a python wrapper around the `CircleCI API <https://circleci.com/docs/api/v1-reference/>`_.
+circleci.py is a python wrapper around
+the `CircleCI API <https://circleci.com/docs/api/v1-reference/>`_.
+
+The source code for circleci.py can be found on
+`GitHub <https://github.com/levlaz/circleci.py>`_.
 
 .. include:: contents.rst.inc

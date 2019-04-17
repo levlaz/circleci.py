@@ -12,8 +12,6 @@ Tutorial
 .. toctree::
     :maxdepth: 2
 
-    demo
-
 API Reference
 -------------
 
@@ -34,14 +32,6 @@ Refernce for various utility modules in circleci.py
     :maxdepth: 2
 
     util
-
-SDK Reference
--------------
-
-.. toctree::
-    :maxdepth: 2
-
-    sdk
 
 Developer Documentation
 -----------------------
