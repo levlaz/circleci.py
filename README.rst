@@ -1,11 +1,9 @@
+**Note: This project is no longer actively maintained.** There is an active `fork here <https://github.com/alpinweis/pycircleci>`_.
+
 circleci.py
 ===========
 
 Python Wrapper and SDK around the CircleCI API
-
-.. image:: https://circleci.com/gh/levlaz/circleci.py.svg?style=shield
-    :target: https://circleci.com/gh/levlaz/circleci.py
-    :alt: CI Status
 
 .. image:: https://codecov.io/gh/levlaz/circleci.py/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/levlaz/circleci.py
